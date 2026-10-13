@@ -1,0 +1,43 @@
+name: Customer value dictionary (with circles)
+metrics:
+  - id: lifetime_value
+    name: Customer lifetime value
+    definition: What a customer is expected to bring in over the whole time they buy, worked out from the margin per customer.
+    type: average
+    formula: "{customer_margin} * 24"
+    unit: USD
+    grain: customer
+    owner: Finance
+    source: orders database
+    status: active
+  - id: customer_margin
+    name: Margin per customer
+    definition: What is left of the revenue per customer after the cost of the goods.
+    type: average
+    formula: "{average_revenue_per_customer} * 0.4"
+    unit: USD
+    grain: customer
+    owner: Finance
+    source: orders database
+    status: active
+  - id: average_revenue_per_customer
+    name: Average revenue per customer
+    definition: The revenue of a customer divided over the months of their life, taken from the lifetime value.
+    type: average
+    formula: "{lifetime_value} / 24"
+    unit: USD
+    grain: customer
+    owner: Finance
+    source: orders database
+    status: active
+  - id: repeat_rate
+    name: Repeat rate
+    definition: The share of the customers who order again, taken as half of the repeat rate of the month before.
+    type: rate
+    formula: "{repeat_rate} / 2"
+    unit: percent
+    grain: customer
+    period: calendar month
+    owner: Customer success
+    source: orders database
+    status: active

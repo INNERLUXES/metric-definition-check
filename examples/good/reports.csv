@@ -1,0 +1,8 @@
+report,owner,metric,label
+Growth review,Growth,new_subscriptions,New subscriptions
+Growth review,Growth,cancelled_subscriptions,
+Growth review,Growth,net_new_subscriptions,
+Growth review,Growth,logo_churn_rate,Logo churn rate
+Finance pack,Finance,monthly_recurring_revenue,MRR
+Finance pack,Finance,annual_recurring_revenue,ARR
+Product funnel,Product,trial_conversion_rate,Trial to paid

@@ -1,0 +1,125 @@
+{
+  "name": "Subscription product metric dictionary",
+  "description": "Definitions of the measures that the product and billing reports use.",
+  "metrics": [
+    {
+      "id": "new_subscriptions",
+      "name": "New subscriptions",
+      "definition": "The subscriptions that started a first paid term in the month, not counting a restart of a cancelled one.",
+      "type": "count",
+      "formula": "count_distinct(subscriptions.subscription_id)",
+      "unit": "count",
+      "grain": "month",
+      "period": "calendar month",
+      "owner": "Growth",
+      "source": ["billing system"],
+      "status": "active",
+      "filters": ["first paid term only"]
+    },
+    {
+      "id": "cancelled_subscriptions",
+      "name": "Cancelled subscriptions",
+      "definition": "The subscriptions whose paid term ended in the month without a renewal.",
+      "type": "count",
+      "formula": "count_distinct(subscriptions.subscription_id)",
+      "unit": "count",
+      "grain": "month",
+      "period": "calendar month",
+      "owner": "Growth",
+      "source": ["billing system"],
+      "status": "active",
+      "filters": ["ended without renewal"]
+    },
+    {
+      "id": "net_new_subscriptions",
+      "name": "Net new subscriptions",
+      "definition": "How many more subscriptions the month added than it lost: new subscriptions less cancelled ones.",
+      "type": "count",
+      "formula": "{new_subscriptions} - {cancelled_subscriptions}",
+      "unit": "count",
+      "grain": "month",
+      "period": "calendar month",
+      "owner": "Growth",
+      "source": ["billing system"],
+      "status": "active"
+    },
+    {
+      "id": "monthly_recurring_revenue",
+      "name": "Monthly recurring revenue",
+      "aliases": ["MRR"],
+      "definition": "The value of all paid subscriptions, each taken as one month of its price, on the last day of the month. One-off fees are left out.",
+      "type": "snapshot",
+      "formula": "sum(subscriptions.monthly_price)",
+      "unit": "USD",
+      "grain": "month",
+      "period": "as at the last day of the month",
+      "owner": "Finance",
+      "source": ["billing system"],
+      "status": "active",
+      "filters": ["paid subscriptions", "excludes one-off fees"]
+    },
+    {
+      "id": "annual_recurring_revenue",
+      "name": "Annual recurring revenue",
+      "aliases": ["ARR"],
+      "definition": "Twelve months of the monthly recurring revenue on the same day, to show the yearly size of the paid base.",
+      "type": "snapshot",
+      "formula": {
+        "op": "multiply",
+        "args": [
+          { "metric": "monthly_recurring_revenue" },
+          { "value": 12 }
+        ]
+      },
+      "unit": "USD",
+      "grain": "month",
+      "period": "as at the last day of the month",
+      "owner": "Finance",
+      "source": ["billing system"],
+      "status": "active"
+    },
+    {
+      "id": "logo_churn_rate",
+      "name": "Logo churn rate",
+      "definition": "The share of the paying accounts at the start of the month that cancelled in the month.",
+      "type": "rate",
+      "formula": "{cancelled_subscriptions} / count_distinct(subscriptions.account_id)",
+      "numerator": "{cancelled_subscriptions}",
+      "denominator": "paying accounts on the first day of the month",
+      "unit": "percent",
+      "grain": "month",
+      "period": "calendar month",
+      "owner": "Growth",
+      "source": ["billing system"],
+      "status": "active"
+    },
+    {
+      "id": "trial_conversion_rate",
+      "name": "Trial conversion rate",
+      "aliases": ["Trial to paid"],
+      "definition": "The share of the trials that began in the month that turned into a paid subscription within 30 days of the start.",
+      "type": "rate",
+      "formula": "count_distinct(paid_from_trial.trial_id) / count_distinct(trials.trial_id)",
+      "unit": "percent",
+      "grain": "month",
+      "period": "trials that began in the calendar month, followed for 30 days",
+      "owner": "Product",
+      "source": ["billing system", "product events"],
+      "status": "active"
+    },
+    {
+      "id": "mrr_old",
+      "name": "MRR (old definition)",
+      "definition": "The monthly recurring revenue as it was counted before one-off fees were taken out.",
+      "type": "snapshot",
+      "formula": "sum(subscriptions.monthly_price_with_fees)",
+      "unit": "USD",
+      "grain": "month",
+      "period": "as at the last day of the month",
+      "owner": "Finance",
+      "source": ["billing system"],
+      "status": "deprecated",
+      "replaced_by": "monthly_recurring_revenue"
+    }
+  ]
+}

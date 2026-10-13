@@ -1,0 +1,20 @@
+{
+  "reports": [
+    {
+      "name": "Board pack",
+      "metrics": [
+        { "metric": "monthly_recurring_revenue", "label": "MRR" },
+        { "metric": "mrr_booked", "label": "Booked MRR" },
+        { "metric": "trial_conversion", "label": "Trial conversion rate" }
+      ]
+    },
+    {
+      "name": "Growth review",
+      "owner": "Growth",
+      "metrics": [
+        { "metric": "new_subscriptions", "label": "MRR" },
+        "trial_conversion_rate"
+      ]
+    }
+  ]
+}

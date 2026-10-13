@@ -1,0 +1,221 @@
+name: Online shop metric dictionary (with mistakes)
+metrics:
+  - id: orders_placed
+    name: Orders placed
+    definition: The orders that a customer finished checkout for, counted on the day of checkout.
+    type: count
+    formula: count_distinct(orders.order_id)
+    unit: count
+    grain: day
+    period: calendar day
+    owner: Sales operations
+    source: orders database
+    status: active
+  - id: orders_placed
+    name: Orders placed from the carrier feed
+    definition: The orders that the carrier feed shows as handed over, counted on the day of the hand over.
+    type: count
+    formula: count_distinct(carrier_feed.order_id)
+    unit: count
+    grain: day
+    period: calendar day
+    owner: Logistics
+    source: carrier feed
+    status: active
+  - id: order_count
+    name: Order count
+    definition: How many orders there were.
+    type: count
+    formula: count_distinct(orders.order_id)
+    unit: count
+    grain: day
+    period: calendar day
+    owner: Marketing
+    source: orders database
+    status: active
+  - id: revenue
+    name: Revenue
+    definition: Revenue
+    type: sum
+    formula: sum(order_lines.price)
+    unit: USD
+    grain: day
+    period: calendar day
+    owner: Finance
+    source: orders database
+    status: active
+  - id: net_revenue
+    name: Net revenue
+    aliases: [Revenue]
+    definition: Revenue less the refunds of the day.
+    type: sum
+    formula: "{revenue} - {refund}"
+    unit: USD
+    grain: day
+    period: calendar day
+    owner: Finance
+    source: orders database
+    status: active
+  - id: refunds
+    name: Refunds
+    type: sum
+    formula: sum(payments.refund_amount)
+    grain: day
+    period: calendar day
+    owner: Finance
+    status: active
+  - id: revenue_plus_orders
+    name: Revenue plus orders
+    definition: The value of the day's revenue and the number of orders, added into one figure for the summary line.
+    formula: "{revenue} + {orders_placed}"
+    unit: USD
+    grain: day
+    owner: Finance
+    source: orders database
+    status: active
+  - id: net_sales
+    name: Net sales
+    definition: Sales for the day after discounts, taken from the old revenue figure and the forecast.
+    type: sum
+    formula: "{revenue_legacy} + {weekly_revenue_forecast}"
+    unit: USD
+    grain: day
+    period: calendar day
+    owner: Finance
+    source: orders database
+    status: active
+  - id: active_customers
+    name: Active customers
+    definition: The customers with an order in the recent past, each counted once.
+    type: count
+    formula: count_distinct(orders.customer_id)
+    unit: count
+    grain: month
+    owner: Customer success
+    source: orders database
+    status: active
+  - id: churn_rate
+    name: Churn rate
+    definition: The share of the customers that left.
+    type: rate
+    formula: count_distinct(churn.customer_id)
+    unit: percent
+    grain: month
+    period: calendar month
+    owner: Customer success
+    source: customer database
+    status: active
+  - id: customers_total
+    name: Customers in total
+    definition: Every customer the shop has ever had, including the ones who have left.
+    unit: count
+    grain: month
+    owner: Customer success
+    source: customer database
+    status: active
+  - id: page_visits
+    name: Page visits
+    definition: The visits to the shop site, a new visit starting after 30 minutes of no activity.
+    formula: count_distinct(web_events.visit_id)
+    unit: count
+  - id: monthly_signups
+    name: Monthly signups
+    definition: The accounts created in the month, by the day the account was made.
+    type: count
+    formula: count_distinct(accounts.account_id)
+    unit: count
+    grain: month
+    period: calendar month
+    owner: Marketing
+    source: customer database
+    status: active
+  - id: daily_signup_share
+    name: Daily signup share
+    definition: One day's part of the signups of the month, taken as an even share of it.
+    type: ratio
+    formula: "{monthly_signups} / 30"
+    unit: percent
+    grain: day
+    period: calendar day
+    owner: Marketing
+    source: customer database
+    status: active
+  - id: gross_margin
+    name: Gross margin
+    definition: The part of the revenue that is left after the cost of the goods, in money.
+    type: sum
+    formula: "{margin_rate} * {revenue}"
+    unit: USD
+    grain: day
+    period: calendar day
+    owner: Finance
+    source: orders database
+    status: active
+  - id: margin_rate
+    name: Margin rate
+    definition: The gross margin as a share of the revenue.
+    type: ratio
+    formula: "{gross_margin} / {revenue}"
+    unit: percent
+    grain: day
+    period: calendar day
+    owner: Finance
+    source: orders database
+    status: active
+  - id: revenue_legacy
+    name: Revenue (legacy)
+    definition: The total of the order values of the old shop system, which counted shipping and tax.
+    type: sum
+    formula: sum(legacy_orders.total)
+    unit: USD
+    grain: day
+    period: calendar day
+    owner: Finance
+    source: old shop system
+    status: deprecated
+    replaced_by: net_revenu
+  - id: visits_old
+    name: Visits (old)
+    definition: The visits to the shop site as the old tracking script counted them.
+    type: count
+    formula: count_distinct(old_tracking.visit_id)
+    unit: count
+    grain: day
+    period: calendar day
+    owner: Marketing
+    source: old tracking script
+    status: deprecated
+  - id: visits_older
+    name: Visits (older)
+    definition: The visits to the shop site as the first tracking script counted them.
+    type: count
+    formula: count_distinct(first_tracking.visit_id)
+    unit: count
+    grain: day
+    period: calendar day
+    owner: Marketing
+    source: first tracking script
+    status: deprecated
+    replaced_by: visits_old
+  - id: weekly_revenue_forecast
+    name: Weekly revenue forecast
+    definition: The revenue expected for the coming week from the average of the last four weeks.
+    type: sum
+    formula: avg(weekly_revenue.amount)
+    unit: USD
+    grain: week
+    period: next calendar week
+    owner: Finance
+    source: orders database
+    status: draft
+  - id: returns
+    name: Returns
+    defintion: The number of orders sent back by the customer.
+    type: count
+    formula: count_distinct(returns.order_id)
+    unit: count
+    grain: day
+    period: calendar day
+    ownr: Sales operations
+    source: orders database
+    status: retired

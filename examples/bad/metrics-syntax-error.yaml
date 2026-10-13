@@ -1,0 +1,7 @@
+name: Online shop metric dictionary
+metrics:
+  - id: orders_placed
+    name: Orders placed
+    definition: Orders: the ones a customer finished checkout for
+    formula: count_distinct(orders.order_id)
+    unit: count

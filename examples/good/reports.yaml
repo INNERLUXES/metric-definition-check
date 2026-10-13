@@ -1,0 +1,23 @@
+name: Shop reports
+reports:
+  - name: Weekly sales summary
+    owner: Sales operations
+    metrics:
+      - orders_placed
+      - metric: net_revenue
+        label: Revenue
+      - average_order_value
+  - name: Customer health
+    owner: Customer success
+    metrics:
+      - metric: active_customers
+        label: Active customers
+      - metric: customer_churn_rate
+        label: Churn
+      - customers_at_start
+  - name: Delivery performance
+    owner: Logistics
+    metrics:
+      - metric: on_time_delivery_rate
+        label: On-time delivery
+      - orders_delivered

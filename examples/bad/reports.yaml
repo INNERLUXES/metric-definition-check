@@ -1,0 +1,21 @@
+name: Shop reports (with mistakes)
+reports:
+  - name: Weekly sales summary
+    owner: Sales operations
+    metrics:
+      - orders_placed
+      - metric: net_revenue
+        label: Net sales
+  - name: Customer health
+    metrics:
+      - metric: active_customers
+        label: Active clients
+      - metric: customer_churn_rate
+        label: Churn
+      - churn_rate
+  - name: Delivery performance
+    owner: Logistics
+    metrics:
+      - metric: on_time_delivery_rate
+        label: Churn
+      - revenue_legacy

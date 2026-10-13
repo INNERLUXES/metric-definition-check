@@ -1,0 +1,174 @@
+name: Online shop metric dictionary
+description: Definitions of the measures that the shop reports use.
+metrics:
+  - id: orders_placed
+    name: Orders placed
+    aliases: [Order count]
+    definition: The number of orders for which a customer finished checkout, counted on the day of checkout. Test orders and orders of staff accounts are left out.
+    type: count
+    formula: count_distinct(orders.order_id)
+    unit: count
+    grain: day
+    period: calendar day in the store time zone
+    owner: Sales operations
+    source: orders database
+    status: active
+    filters:
+      - test orders
+      - staff accounts
+  - id: gross_revenue
+    name: Gross revenue
+    definition: The value of the goods on the orders placed in the day, at the price the customer saw, before discounts and refunds and without tax or shipping.
+    type: sum
+    formula: sum(order_lines.unit_price * order_lines.quantity)
+    unit: USD
+    grain: day
+    period: calendar day in the store time zone
+    owner: Finance
+    source: [orders database, price list]
+    status: active
+  - id: refunds
+    name: Refunds
+    definition: The value paid back to customers in the day, whatever the day of the order.
+    type: sum
+    formula: sum(payments.refund_amount)
+    unit: USD
+    grain: day
+    period: calendar day in the store time zone
+    owner: Finance
+    source: payment provider export
+    status: active
+  - id: net_revenue
+    name: Net revenue
+    aliases:
+      - Revenue
+    definition: What the shop kept from its sales in the day, which is gross revenue less the refunds paid in the same day.
+    type: sum
+    formula: "{gross_revenue} - {refunds}"
+    unit: USD
+    grain: day
+    period: calendar day in the store time zone
+    owner: Finance
+    source: [orders database, payment provider export]
+    status: active
+  - id: average_order_value
+    name: Average order value
+    definition: How much net revenue a placed order brings in on average, worked out for each day.
+    type: ratio
+    formula: "{net_revenue} / {orders_placed}"
+    numerator: net revenue of the day
+    denominator: orders placed in the day
+    unit: USD
+    grain: day
+    period: calendar day in the store time zone
+    owner: Sales operations
+    source: [orders database, payment provider export]
+    status: active
+  - id: active_customers
+    name: Active customers
+    definition: The customers with at least one placed order in the 28 days that end on the last day of the month, each counted once.
+    type: distinct_count
+    formula: count_distinct(orders.customer_id)
+    unit: count
+    grain: month
+    period: trailing 28 days that end on the last day of the month
+    owner: Customer success
+    source: orders database
+    status: active
+  - id: customers_at_start
+    name: Customers at start of month
+    definition: The customers who were active customers at the end of the month before, which is the group that churn is measured against.
+    type: snapshot
+    formula: count_distinct(customers.customer_id)
+    unit: count
+    grain: month
+    period: as at the first day of the month
+    owner: Customer success
+    source: customer database
+    status: active
+  - id: churned_customers
+    name: Churned customers
+    definition: The customers at the start of the month who have no placed order in the 28 days that end on the last day of the month.
+    type: count
+    formula: count_distinct(churn_events.customer_id)
+    unit: count
+    grain: month
+    period: calendar month
+    owner: Customer success
+    source: [orders database, customer database]
+    status: active
+  - id: customer_churn_rate
+    name: Customer churn rate
+    aliases: [Churn]
+    definition: The share of the customers at the start of the month who churned in the month.
+    type: rate
+    formula:
+      op: divide
+      args:
+        - metric: churned_customers
+        - metric: customers_at_start
+    unit: percent
+    grain: month
+    period: calendar month
+    owner: Customer success
+    source: customer database
+    status: active
+  - id: orders_delivered
+    name: Orders delivered
+    definition: The orders that reached the customer, counted on the day of the delivery scan.
+    type: count
+    formula: count_distinct(deliveries.order_id)
+    unit: count
+    grain: day
+    period: calendar day in the store time zone
+    owner: Logistics
+    source: carrier feed
+    status: active
+  - id: orders_delivered_on_time
+    name: Orders delivered on time
+    definition: The delivered orders whose delivery scan is on or before the promised delivery day.
+    type: count
+    formula: count_distinct(deliveries.order_id)
+    unit: count
+    grain: day
+    period: calendar day in the store time zone
+    owner: Logistics
+    source: carrier feed
+    status: active
+    filters:
+      - delivery scan on or before the promised day
+  - id: on_time_delivery_rate
+    name: On-time delivery rate
+    aliases: [On-time delivery]
+    definition: The share of the orders delivered in the month that were delivered on or before the promised delivery day.
+    type: rate
+    formula: "{orders_delivered_on_time} / {orders_delivered}"
+    unit: percent
+    grain: month
+    period: calendar month, by the day of the delivery scan
+    owner: Logistics
+    source: carrier feed
+    status: active
+  - id: repeat_customer_rate
+    name: Repeat customer rate
+    definition: The share of the customers with an order in the quarter who had at least two orders in it.
+    type: rate
+    formula: count_distinct(repeat_customers.customer_id) / count_distinct(orders.customer_id)
+    unit: percent
+    grain: quarter
+    period: calendar quarter
+    owner: Customer success
+    source: orders database
+    status: draft
+  - id: revenue_legacy
+    name: Revenue (legacy)
+    definition: The total of the order values of the old shop system, which counted shipping and tax.
+    type: sum
+    formula: sum(legacy_orders.total)
+    unit: USD
+    grain: day
+    period: calendar day in the store time zone
+    owner: Finance
+    source: old shop system
+    status: deprecated
+    replaced_by: net_revenue

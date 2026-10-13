@@ -1,0 +1,100 @@
+{
+  "name": "Subscription product metric dictionary (with mistakes)",
+  "metrics": [
+    {
+      "id": "monthly_recurring_revenue",
+      "name": "Monthly recurring revenue",
+      "aliases": ["MRR"],
+      "definition": "The value of all paid subscriptions, each taken as one month of its price, on the last day of the month.",
+      "type": "snapshot",
+      "formula": "sum(subscriptions.monthly_price)",
+      "unit": "USD",
+      "grain": "month",
+      "period": "as at the last day of the month",
+      "owner": "Finance",
+      "source": ["billing system"],
+      "status": "active"
+    },
+    {
+      "id": "mrr_booked",
+      "name": "MRR",
+      "definition": "The monthly price of the subscriptions that were signed in the month, including the ones that have not started.",
+      "type": "snapshot",
+      "formula": "sum(contracts.monthly_price)",
+      "unit": "USD",
+      "grain": "month",
+      "period": "as at the last day of the month",
+      "owner": "Sales",
+      "source": ["contract system"],
+      "status": "active"
+    },
+    {
+      "id": "new_subscriptions",
+      "name": "New subscriptions",
+      "definition": "The subscriptions that started a first paid term in the month.",
+      "type": "count",
+      "formula": "count_distinct(subscriptions.subscription_id)",
+      "unit": "count",
+      "grain": "month",
+      "owner": "Growth",
+      "source": ["billing system"],
+      "status": "active"
+    },
+    {
+      "id": "recurring_revenue_and_new",
+      "name": "Recurring revenue and new subscriptions",
+      "definition": "The recurring revenue and the new subscriptions of the month, added for the board line.",
+      "type": "sum",
+      "formula": {
+        "op": "add",
+        "args": [
+          { "metric": "monthly_recurring_revenue" },
+          { "metric": "new_subscriptions" }
+        ]
+      },
+      "unit": "USD",
+      "grain": "month",
+      "owner": "Finance",
+      "source": ["billing system"],
+      "status": "active"
+    },
+    {
+      "id": "trial_conversion_rate",
+      "name": "Trial conversion rate",
+      "definition": "The share of the trials that began in the month that turned into a paid subscription.",
+      "type": "rate",
+      "formula": "count_distinct(paid_from_trial.trial_id)",
+      "numerator": "trials that turned into a paid subscription",
+      "unit": "percent",
+      "grain": "month",
+      "period": "calendar month",
+      "owner": "Product",
+      "source": ["billing system"],
+      "status": "active"
+    },
+    {
+      "id": "paying_accounts",
+      "name": "Paying accounts",
+      "definition": "The accounts with a paid subscription on the last day of the month.",
+      "type": "snapshot",
+      "formula": "count_distinct({subscriptions.account_id)",
+      "unit": "count",
+      "grain": "month",
+      "owner": "Finance",
+      "source": ["billing system"],
+      "status": "active"
+    },
+    {
+      "id": "average_seats",
+      "name": "Average seats",
+      "definition": "The average number of seats on a paid subscription on the last day of the month.",
+      "type": "average",
+      "formula": { "op": "median", "args": [{ "field": "subscriptions.seats" }] },
+      "unit": "count",
+      "grain": "month",
+      "owner": "Product",
+      "source": ["billing system"],
+      "status": "active"
+    }
+  ]
+}

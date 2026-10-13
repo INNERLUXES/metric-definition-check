@@ -1,0 +1,8 @@
+report,owner,metric,label,notes
+Weekly sales summary,Sales operations,orders_placed,Orders placed,
+Weekly sales summary,Sales operations,revenu,Revenue,
+Weekly sales summary,Sales operations,net_revenue,Sales,
+Finance pack,,revenue,Revenue,
+Finance pack,,revenue_legacy,Revenue (legacy),
+Finance pack,,gross_margin,Revenue,
+Finance pack,,refunds
