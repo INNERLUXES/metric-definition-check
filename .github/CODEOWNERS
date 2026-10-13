@@ -1,0 +1,24 @@
+# Every change is reviewed by a maintainer.
+* @innerluxesdev
+
+# The readers of the dictionary and the reports file, the formula reader, the checks, the rules, the reading of files and the output
+# decide every result and what is read from the disk; changes need extra care.
+/src/check.js @innerluxesdev
+/src/checks.js @innerluxesdev
+/src/cli.js @innerluxesdev
+/src/collect.js @innerluxesdev
+/src/csv.js @innerluxesdev
+/src/data.js @innerluxesdev
+/src/dictionary.js @innerluxesdev
+/src/fields.js @innerluxesdev
+/src/files.js @innerluxesdev
+/src/formula.js @innerluxesdev
+/src/index.js @innerluxesdev
+/src/json.js @innerluxesdev
+/src/nodes.js @innerluxesdev
+/src/report.js @innerluxesdev
+/src/reports.js @innerluxesdev
+/src/rules.js @innerluxesdev
+/src/size.js @innerluxesdev
+/src/text.js @innerluxesdev
+/src/yaml.js @innerluxesdev

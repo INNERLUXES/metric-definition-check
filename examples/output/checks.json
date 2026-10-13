@@ -1,0 +1,254 @@
+[
+  {
+    "id": "file-unreadable",
+    "severity": "error",
+    "kind": "file",
+    "summary": "a file cannot be followed by the reader (a syntax error in the YAML subset or the JSON, a dictionary with no metrics, a reports table with a quote that is never closed or a header without the columns it needs, or a file past a limit); no other check ran on that file",
+    "fix": "Fix the line and column named; docs/inputs.md lists the YAML subset, the keys of a dictionary and the keys and columns of a reports file.",
+    "own": "Refusing a file that cannot be followed is a best practice of this tool; no standard sets it; a tool that guessed would report a clean dictionary for text it did not read",
+    "cannot": "It says where the reader stopped, not what another YAML, JSON or CSV reader would make of the file."
+  },
+  {
+    "id": "field-invalid",
+    "severity": "error",
+    "kind": "file",
+    "summary": "a value is not what the format says: a metric with no id or no name, a status that is not active, draft or deprecated, a type the tool does not know, a formula that cannot be followed (a { never closed, an op with no args), a value that is not text, or a row with the wrong number of cells",
+    "fix": "Write the value as docs/inputs.md says. A metric or a row with a value the tool cannot use is left out of the other checks where it matters, so fix it first.",
+    "own": "Reporting a value the tool cannot use is a best practice of this tool; no standard sets it; a misread value would turn into a wrong answer in a later check",
+    "cannot": "It checks the shape of a value. It cannot tell a value that is allowed but wrong from one that is right."
+  },
+  {
+    "id": "field-unknown",
+    "severity": "warning",
+    "kind": "file",
+    "summary": "a key of the dictionary, of a metric, of the reports file or of a report, or a column of a reports table, that the tool does not read, often a misspelt name such as defintion or ownr; what is under it is not checked",
+    "fix": "Correct the name to a key or column of docs/inputs.md, or take it out of the file.",
+    "own": "Reporting a key or column that is not read is a best practice of this tool; no standard sets it; a misspelt owner key would otherwise look like a missing owner on every metric, or worse, hide a formula from every check",
+    "cannot": "It suggests the nearest name within two edits and cannot tell a misspelling from a key your own tools use on purpose."
+  },
+  {
+    "id": "metric-duplicate-id",
+    "severity": "error",
+    "kind": "dictionary",
+    "summary": "two metrics with the same id (compared without case and without extra spaces)",
+    "fix": "Give each metric one id. If two entries describe the same measure, merge them; if they differ, name the difference in the id and in the name.",
+    "own": "Requiring a unique id is a best practice of this tool; no standard sets it; a formula, a report and a replaced_by all point at a metric by its id, and two metrics of one id make every one of those a guess",
+    "cannot": "It compares the written ids. It cannot tell two ids for one measure from two measures."
+  },
+  {
+    "id": "name-clash",
+    "severity": "error",
+    "kind": "dictionary",
+    "summary": "one name or alias used by two different metrics (compared without case and without extra spaces): the classic way two reports show two numbers under one name; a deprecated metric that names the other in replaced_by is left out",
+    "fix": "Give each metric a name of its own that says what is different (for example \"Revenue (booked)\" and \"Revenue (recognised)\"), and remove the alias from the metric that does not own it.",
+    "own": "Requiring a name or an alias to belong to one metric is a best practice of this tool; no standard sets it; a reader who sees the name in two reports cannot tell which definition stands behind the number",
+    "cannot": "It compares the written names and aliases. It cannot tell two names for one measure (\"Sales\" and \"Revenue\") from two measures, and it cannot see a name that is only used in a dashboard."
+  },
+  {
+    "id": "metric-no-definition",
+    "severity": "error",
+    "kind": "dictionary",
+    "summary": "a metric with no written definition: nothing says in words what is counted or measured",
+    "fix": "Write the definition in the \"definition\" key in a sentence or two, in the words a reader of the report would use, and say what is in and what is out.",
+    "own": "Requiring a written definition is a best practice of this tool; no standard sets it; a name is not a definition, and two people who read one name will build two numbers",
+    "cannot": "It looks for text. It cannot tell a definition that is clear from one that is a single word."
+  },
+  {
+    "id": "definition-repeats-name",
+    "severity": "warning",
+    "kind": "dictionary",
+    "summary": "a definition that is only the name said again, such as \"Revenue\" for the metric Revenue or \"The number of active customers\" for Active customers",
+    "fix": "Say what is counted, for whom and over what period, and what is left out. A definition must tell a reader something the name does not.",
+    "own": "Reporting a definition that repeats the name is a best practice of this tool; no standard sets it; it looks like a definition and so stops anyone from asking for a real one",
+    "cannot": "It compares the words of the name and of the definition after dropping a few filler words. A definition that says little in other words passes."
+  },
+  {
+    "id": "metric-no-formula",
+    "severity": "error",
+    "kind": "dictionary",
+    "summary": "a metric with no formula (no \"formula\" key, or an empty one): nothing says how the number is worked out",
+    "fix": "Write the formula in \"formula\" as text (naming other metrics as {metric_id}) or as a structure with op and args.",
+    "own": "Requiring a formula is a best practice of this tool; no standard sets it; a definition in words leaves room for two sums, and the formula is where the two meet",
+    "cannot": "It looks for a formula. It does not run it, and it cannot tell a formula that is right from one that is wrong."
+  },
+  {
+    "id": "metric-no-unit",
+    "severity": "warning",
+    "kind": "dictionary",
+    "summary": "a metric with no unit (currency, count, percent, days and so on)",
+    "fix": "Write the unit in \"unit\", such as USD, count, percent or days. Use the same word for the same unit everywhere.",
+    "own": "Asking for a unit on every metric is a best practice of this tool; no standard sets it; a number without a unit invites a sum of things that cannot be added, and the unit check needs the units to be declared",
+    "cannot": "It looks for text. It does not know whether the unit fits the formula beyond the sums the unit check can see."
+  },
+  {
+    "id": "metric-no-grain",
+    "severity": "warning",
+    "kind": "dictionary",
+    "summary": "a metric with no grain: nothing says the level it is calculated at (order, day, customer and so on)",
+    "fix": "Write the grain in \"grain\", such as order, day, customer or month: the thing that one row of the result stands for.",
+    "own": "Asking for a grain on every metric is a best practice of this tool; no standard sets it; two numbers at two grains can look the same and disagree when they are summed or joined",
+    "cannot": "It looks for text. It cannot tell whether the grain is the one the data really has."
+  },
+  {
+    "id": "metric-no-owner",
+    "severity": "warning",
+    "kind": "dictionary",
+    "summary": "a metric with no owner: nobody is named who decides what the definition is",
+    "fix": "Write the person, role or team in \"owner\". A role or a team is better than a person who may leave.",
+    "own": "Asking for an owner on every metric is a best practice of this tool; no standard sets it; a definition with no owner is changed by whoever needs it next, and nobody can settle a dispute over it",
+    "cannot": "It looks for text. It does not know whether the owner exists or agrees."
+  },
+  {
+    "id": "metric-no-source",
+    "severity": "warning",
+    "kind": "dictionary",
+    "summary": "a metric with no source system: nothing says where the data comes from",
+    "fix": "Write the system or systems in \"source\", for example the billing system or the order database.",
+    "own": "Asking for a source system on every metric is a best practice of this tool; no standard sets it; the same measure from two systems is a common reason for two numbers, and it cannot be settled when the source is not written down",
+    "cannot": "It looks for text. It does not connect to the system and cannot tell whether the name is right."
+  },
+  {
+    "id": "metric-no-status",
+    "severity": "warning",
+    "kind": "dictionary",
+    "summary": "a metric with no status (active, draft or deprecated); the tool reads it as active for the other checks",
+    "fix": "Write the status in \"status\": active, draft or deprecated.",
+    "own": "Asking for a status on every metric is a best practice of this tool; no standard sets it; a reader cannot tell a metric that is settled from one that is being written or one that is going away",
+    "cannot": "It looks for the key. It does not know whether the status is true."
+  },
+  {
+    "id": "metric-no-period",
+    "severity": "warning",
+    "kind": "dictionary",
+    "summary": "a rate, a ratio or a count with no period or time window rule (no \"period\" key): \"active customers\" in which days, \"churn\" over what month; a metric of type snapshot is left out",
+    "fix": "Write the period in \"period\", such as \"calendar month\", \"trailing 28 days\" or \"as at the last day of the month\", or set the type to snapshot if the metric is a point in time.",
+    "own": "Asking for a period on a rate, a ratio or a count is a best practice of this tool; no standard sets it; the same name over a week and over a month gives two numbers, and nothing in the name tells which",
+    "cannot": "A metric is read as a rate, a ratio or a count from its \"type\", or, when there is none, from the words of its name and id, its unit and a division in its formula. A metric that is one in fact and does not look like one passes."
+  },
+  {
+    "id": "formula-unit-mismatch",
+    "severity": "error",
+    "kind": "dictionary",
+    "summary": "a formula that adds or subtracts metrics whose declared units differ, such as a currency amount and a count; only terms that are exactly one metric are compared",
+    "fix": "Convert one side first (for example with a price) or use a different formula. If the two units are the same unit under two spellings, write them the same way.",
+    "own": "Comparing the declared units of the terms of a sum is a best practice of this tool; no standard sets it; adding things of different units is a wrong number that looks like a right one",
+    "cannot": "It compares the declared units, as written, of terms that are exactly one metric in a sum. It does no algebra with units, so a product or a ratio is not checked, and a unit that is missing is not compared."
+  },
+  {
+    "id": "formula-unknown-metric",
+    "severity": "error",
+    "kind": "dictionary",
+    "summary": "a formula, a numerator or a denominator that names a metric id that is not in the dictionary",
+    "fix": "Correct the id, add the metric to the dictionary, or write the part as a source field (without braces) if it is not a metric.",
+    "own": "Requiring every metric a formula names to exist is a best practice of this tool; no standard sets it; a formula built on a metric that is not defined is a definition that cannot be followed",
+    "cannot": "It looks up the written id (with the nearest id when one is close). It cannot tell a metric you forgot from one that lives in another dictionary."
+  },
+  {
+    "id": "metric-circular",
+    "severity": "error",
+    "kind": "dictionary",
+    "summary": "metrics that depend on each other in a circle, directly (a metric that names itself) or through others",
+    "fix": "Break the circle: one of the metrics in it must be worked out from source fields, not from the next one in the circle.",
+    "own": "Reporting a circle of definitions is a best practice of this tool; no standard sets it; a metric that depends on itself has no value, and a tool that tries to build one either fails or settles on a number nobody chose",
+    "cannot": "It follows the metrics named in formulas, numerators and denominators. It cannot see a circle that goes through a system outside the dictionary."
+  },
+  {
+    "id": "grain-finer-than-input",
+    "severity": "warning",
+    "kind": "dictionary",
+    "summary": "a metric built from other metrics whose grain is finer than one of them, with no \"aggregation\" note: a daily figure made from a monthly one, an order-level figure made from a customer-level one",
+    "fix": "Say in \"aggregation\" how the coarser input is spread down to the finer grain, or move the metric to the grain of its inputs.",
+    "own": "Reporting a metric finer than its inputs is a best practice of this tool; no standard sets it; a number cannot be more detailed than the numbers it is built from unless someone decided how to split it, and that decision should be written down",
+    "cannot": "It knows the ladders of docs/method.md (second to year, event to company) and only compares two grains on the same ladder. A grain it does not know is not compared."
+  },
+  {
+    "id": "active-uses-inactive",
+    "severity": "error",
+    "kind": "dictionary",
+    "summary": "an active metric whose formula, numerator or denominator names a metric that is draft or deprecated",
+    "fix": "Move the active metric to the active or replacing metric, or finish the draft before the active metric depends on it.",
+    "own": "Reporting an active metric that depends on one that is not settled is a best practice of this tool; no standard sets it; a published number should not rest on a definition that is still moving or is going away",
+    "cannot": "It reads the written status. A metric with no status is read as active."
+  },
+  {
+    "id": "deprecated-no-replacement",
+    "severity": "warning",
+    "kind": "dictionary",
+    "summary": "a deprecated metric with no \"replaced_by\"",
+    "fix": "Name the metric that replaces it in \"replaced_by\", or say in \"note\" that nothing does.",
+    "own": "Asking a deprecated metric to say what to use instead is a best practice of this tool; no standard sets it; a reader who finds a deprecated metric in a report has to be told where to go",
+    "cannot": "It looks for the key. It does not know whether the replacement means the same thing."
+  },
+  {
+    "id": "replaced-by-invalid",
+    "severity": "error",
+    "kind": "dictionary",
+    "summary": "a \"replaced_by\" that names a metric that is not in the dictionary, is the metric itself or is deprecated",
+    "fix": "Point replaced_by at an active metric of the dictionary, or at the last metric of the chain.",
+    "own": "Requiring a replacement to exist and to be in use is a best practice of this tool; no standard sets it; a pointer to nothing, or to another deprecated metric, sends the reader nowhere",
+    "cannot": "It follows one step. It does not know whether the replacement is the right one."
+  },
+  {
+    "id": "formula-duplicate",
+    "severity": "warning",
+    "kind": "dictionary",
+    "summary": "two metrics with the same formula and the same filters under different names (the formula compared as text without case and spaces, or as the same structure); a deprecated metric that names the other in replaced_by is left out",
+    "fix": "Keep one metric and make the other an alias, or write down what makes them different: a filter, a period, a source.",
+    "own": "Reporting two names for one formula is a best practice of this tool; no standard sets it; the same sum under two names is how a team ends up with two dashboards and an argument about which is right",
+    "cannot": "It compares the written formula. A formula written in another order or with other names for the fields is not seen as the same, and two formulas that look alike but have different filters are only told apart by what is written in the filters."
+  },
+  {
+    "id": "ratio-parts-missing",
+    "severity": "warning",
+    "kind": "dictionary",
+    "summary": "a ratio or a rate whose numerator or denominator is not stated: no \"numerator\" and \"denominator\", and no division in the formula that has something on each side",
+    "fix": "Write the \"numerator\" and the \"denominator\" in words (or as {metric_id}), or write the division in the formula.",
+    "own": "Requiring both parts of a ratio is a best practice of this tool; no standard sets it; a rate is only as clear as its denominator, and \"churn\" over customers at the start and over all customers are two numbers",
+    "cannot": "A metric is read as a ratio from its \"type\", or, when there is none, from the words of its name and id. It does not know whether the parts are the right ones."
+  },
+  {
+    "id": "report-unknown-metric",
+    "severity": "error",
+    "kind": "reports",
+    "summary": "a report that shows a metric id that is not in the dictionary",
+    "fix": "Correct the id, add the metric to the dictionary, or take it off the report. If the report uses a name there, write the id.",
+    "own": "Requiring every metric on a report to be defined is a best practice of this tool; no standard sets it; a number on a report with no entry in the dictionary has no definition anyone can point to",
+    "cannot": "It looks up the written id (with the nearest id when one is close). It cannot tell a metric you forgot from one that lives in another dictionary."
+  },
+  {
+    "id": "report-label-differs",
+    "severity": "warning",
+    "kind": "reports",
+    "summary": "a report that shows a metric under a label that is neither its name nor one of its aliases",
+    "fix": "Use the name of the dictionary on the report, or add the label to the aliases of that metric (and see that it belongs to no other).",
+    "own": "Asking a report to use the name of the dictionary is a best practice of this tool; no standard sets it; a metric that is called something else on a report cannot be traced to its definition",
+    "cannot": "It compares the written label with the name and aliases without case and extra spaces. It does not read the report itself, only the list."
+  },
+  {
+    "id": "report-shows-deprecated",
+    "severity": "warning",
+    "kind": "reports",
+    "summary": "a report that shows a deprecated metric",
+    "fix": "Move the report to the metric named in replaced_by, or keep it on purpose and say why in the note of the metric.",
+    "own": "Reporting a deprecated metric that is still shown is a best practice of this tool; no standard sets it; it is how an old definition goes on being quoted after the team has moved on",
+    "cannot": "It reads the written status and the list of reports. It cannot see a report that is not in the list."
+  },
+  {
+    "id": "report-label-clash",
+    "severity": "error",
+    "kind": "reports",
+    "summary": "one label used for two different metric ids in the reports (a metric shown with no label counts under its name)",
+    "fix": "Give each metric one label of its own on every report, so a reader who sees the label in two places gets the same number.",
+    "own": "Reporting one label for two metrics is a best practice of this tool; no standard sets it; it is the two-numbers problem seen from the reports: the same words on two screens over two definitions",
+    "cannot": "It compares the written labels without case and extra spaces. It cannot see a label that two reports build in their own tool."
+  },
+  {
+    "id": "report-no-owner",
+    "severity": "warning",
+    "kind": "reports",
+    "summary": "a report with no owner (in a table, when the table has an owner column)",
+    "fix": "Write the person, role or team that answers for the report in \"owner\".",
+    "own": "Asking for an owner on every report is a best practice of this tool; no standard sets it; when a number on a report is questioned, someone has to be named who can answer",
+    "cannot": "It looks for text. It does not know whether the owner exists or agrees."
+  }
+]

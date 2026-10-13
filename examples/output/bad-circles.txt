@@ -1,0 +1,66 @@
+metric-definition-check: examples/bad/circular.yaml
+dictionary file: examples/bad/circular.yaml (yaml, 43 lines, 1,393 bytes)
+dictionary: Customer value dictionary (with circles): 4 metrics
+findings: 2 (2 error)
+
+Metrics for each status
+
+  status  metrics
+  active  4
+
+Metrics for each owner
+
+  owner             metrics
+  Finance           3
+  Customer success  1
+
+Metrics for each grain
+
+  grain     metrics
+  customer  4
+
+Checks (28)
+
+  check                      level    kind        status   findings
+  file-unreadable            error    file        pass     0
+  field-invalid              error    file        pass     0
+  field-unknown              warning  file        pass     0
+  metric-duplicate-id        error    dictionary  pass     0
+  name-clash                 error    dictionary  pass     0
+  metric-no-definition       error    dictionary  pass     0
+  definition-repeats-name    warning  dictionary  pass     0
+  metric-no-formula          error    dictionary  pass     0
+  metric-no-unit             warning  dictionary  pass     0
+  metric-no-grain            warning  dictionary  pass     0
+  metric-no-owner            warning  dictionary  pass     0
+  metric-no-source           warning  dictionary  pass     0
+  metric-no-status           warning  dictionary  pass     0
+  metric-no-period           warning  dictionary  pass     0
+  formula-unit-mismatch      error    dictionary  pass     0
+  formula-unknown-metric     error    dictionary  pass     0
+  metric-circular            error    dictionary  fail     2
+  grain-finer-than-input     warning  dictionary  pass     0
+  active-uses-inactive       error    dictionary  pass     0
+  deprecated-no-replacement  warning  dictionary  pass     0
+  replaced-by-invalid        error    dictionary  pass     0
+  formula-duplicate          warning  dictionary  pass     0
+  ratio-parts-missing        warning  dictionary  pass     0
+  report-unknown-metric      error    reports     skipped  - (no --reports file was given)
+  report-label-differs       warning  reports     skipped  - (no --reports file was given)
+  report-shows-deprecated    warning  reports     skipped  - (no --reports file was given)
+  report-label-clash         error    reports     skipped  - (no --reports file was given)
+  report-no-owner            warning  reports     skipped  - (no --reports file was given)
+
+Findings (2)
+
+  ERROR    metric-circular            examples/bad/circular.yaml:7
+           3 metrics depend on each other in a circle: "Customer lifetime value", "Margin per customer" and "Average revenue per customer".
+           fix: Break the circle: one of the metrics in it must be worked out from source fields, not from the next one in the circle.
+
+  ERROR    metric-circular            examples/bad/circular.yaml:37
+           The metric "Repeat rate" names itself in its formula, so it is defined by itself.
+           fix: Break the circle: one of the metrics in it must be worked out from source fields, not from the next one in the circle.
+
+This report reads the dictionary file and the reports file and nothing else. It never connects to data and never runs a formula. A clean result means that none of the problems of its checks were found in them; it is not a statement that the definitions are right, that the numbers are correct or that the reports show what they say.
+
+RESULT: FAIL - 2 findings at or above error (2 error)

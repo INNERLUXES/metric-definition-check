@@ -1,0 +1,55 @@
+metric-definition-check: examples/bad/metrics-syntax-error.yaml + examples/bad/reports-syntax-error.csv
+dictionary file: examples/bad/metrics-syntax-error.yaml (yaml, 7 lines, 218 bytes)
+reports file: examples/bad/reports-syntax-error.csv (csv, 3 lines, 151 bytes)
+dictionary: not read: the file could not be followed
+reports: not read: the file could not be followed
+findings: 2 (2 error)
+
+Checks (28)
+
+  check                      level    kind        status         findings
+  file-unreadable            error    file        fail           2
+  field-invalid              error    file        pass           0
+  field-unknown              warning  file        pass           0
+  metric-duplicate-id        error    dictionary  not-evaluated  - (the dictionary file could not be read)
+  name-clash                 error    dictionary  not-evaluated  - (the dictionary file could not be read)
+  metric-no-definition       error    dictionary  not-evaluated  - (the dictionary file could not be read)
+  definition-repeats-name    warning  dictionary  not-evaluated  - (the dictionary file could not be read)
+  metric-no-formula          error    dictionary  not-evaluated  - (the dictionary file could not be read)
+  metric-no-unit             warning  dictionary  not-evaluated  - (the dictionary file could not be read)
+  metric-no-grain            warning  dictionary  not-evaluated  - (the dictionary file could not be read)
+  metric-no-owner            warning  dictionary  not-evaluated  - (the dictionary file could not be read)
+  metric-no-source           warning  dictionary  not-evaluated  - (the dictionary file could not be read)
+  metric-no-status           warning  dictionary  not-evaluated  - (the dictionary file could not be read)
+  metric-no-period           warning  dictionary  not-evaluated  - (the dictionary file could not be read)
+  formula-unit-mismatch      error    dictionary  not-evaluated  - (the dictionary file could not be read)
+  formula-unknown-metric     error    dictionary  not-evaluated  - (the dictionary file could not be read)
+  metric-circular            error    dictionary  not-evaluated  - (the dictionary file could not be read)
+  grain-finer-than-input     warning  dictionary  not-evaluated  - (the dictionary file could not be read)
+  active-uses-inactive       error    dictionary  not-evaluated  - (the dictionary file could not be read)
+  deprecated-no-replacement  warning  dictionary  not-evaluated  - (the dictionary file could not be read)
+  replaced-by-invalid        error    dictionary  not-evaluated  - (the dictionary file could not be read)
+  formula-duplicate          warning  dictionary  not-evaluated  - (the dictionary file could not be read)
+  ratio-parts-missing        warning  dictionary  not-evaluated  - (the dictionary file could not be read)
+  report-unknown-metric      error    reports     not-evaluated  - (the reports file could not be read)
+  report-label-differs       warning  reports     not-evaluated  - (the reports file could not be read)
+  report-shows-deprecated    warning  reports     not-evaluated  - (the reports file could not be read)
+  report-label-clash         error    reports     not-evaluated  - (the reports file could not be read)
+  report-no-owner            warning  reports     not-evaluated  - (the reports file could not be read)
+
+Findings (2)
+
+  ERROR    file-unreadable            examples/bad/metrics-syntax-error.yaml:5
+           The dictionary file cannot be read as the YAML subset: a value that holds a colon and a space must be in quotes.
+           fix: Fix the line and column named; docs/inputs.md lists the YAML subset, the keys of a dictionary and the keys and columns of a reports file.
+
+  ERROR    file-unreadable            examples/bad/reports-syntax-error.csv:2
+           The reports file cannot be read as CSV: the quote that opens the cell was never closed; the file ends inside it.
+           fix: Fix the line and column named; docs/inputs.md lists the YAML subset, the keys of a dictionary and the keys and columns of a reports file.
+
+note: no check of the dictionary ran because the dictionary file could not be read
+note: no check of the reports ran because the reports file could not be read
+
+This report reads the dictionary file and the reports file and nothing else. It never connects to data and never runs a formula. A clean result means that none of the problems of its checks were found in them; it is not a statement that the definitions are right, that the numbers are correct or that the reports show what they say.
+
+RESULT: FAIL - 2 findings at or above error (2 error)

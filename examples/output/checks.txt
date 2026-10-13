@@ -1,0 +1,32 @@
+metric-definition-check checks
+
+  file-unreadable            error    file        a file cannot be followed by the reader (a syntax error in the YAML subset or the JSON, a dictionary with no metrics, a reports table with a quote that is never closed or a header without the columns it needs, or a file past a limit); no other check ran on that file
+  field-invalid              error    file        a value is not what the format says: a metric with no id or no name, a status that is not active, draft or deprecated, a type the tool does not know, a formula that cannot be followed (a { never closed, an op with no args), a value that is not text, or a row with the wrong number of cells
+  field-unknown              warning  file        a key of the dictionary, of a metric, of the reports file or of a report, or a column of a reports table, that the tool does not read, often a misspelt name such as defintion or ownr; what is under it is not checked
+  metric-duplicate-id        error    dictionary  two metrics with the same id (compared without case and without extra spaces)
+  name-clash                 error    dictionary  one name or alias used by two different metrics (compared without case and without extra spaces): the classic way two reports show two numbers under one name; a deprecated metric that names the other in replaced_by is left out
+  metric-no-definition       error    dictionary  a metric with no written definition: nothing says in words what is counted or measured
+  definition-repeats-name    warning  dictionary  a definition that is only the name said again, such as "Revenue" for the metric Revenue or "The number of active customers" for Active customers
+  metric-no-formula          error    dictionary  a metric with no formula (no "formula" key, or an empty one): nothing says how the number is worked out
+  metric-no-unit             warning  dictionary  a metric with no unit (currency, count, percent, days and so on)
+  metric-no-grain            warning  dictionary  a metric with no grain: nothing says the level it is calculated at (order, day, customer and so on)
+  metric-no-owner            warning  dictionary  a metric with no owner: nobody is named who decides what the definition is
+  metric-no-source           warning  dictionary  a metric with no source system: nothing says where the data comes from
+  metric-no-status           warning  dictionary  a metric with no status (active, draft or deprecated); the tool reads it as active for the other checks
+  metric-no-period           warning  dictionary  a rate, a ratio or a count with no period or time window rule (no "period" key): "active customers" in which days, "churn" over what month; a metric of type snapshot is left out
+  formula-unit-mismatch      error    dictionary  a formula that adds or subtracts metrics whose declared units differ, such as a currency amount and a count; only terms that are exactly one metric are compared
+  formula-unknown-metric     error    dictionary  a formula, a numerator or a denominator that names a metric id that is not in the dictionary
+  metric-circular            error    dictionary  metrics that depend on each other in a circle, directly (a metric that names itself) or through others
+  grain-finer-than-input     warning  dictionary  a metric built from other metrics whose grain is finer than one of them, with no "aggregation" note: a daily figure made from a monthly one, an order-level figure made from a customer-level one
+  active-uses-inactive       error    dictionary  an active metric whose formula, numerator or denominator names a metric that is draft or deprecated
+  deprecated-no-replacement  warning  dictionary  a deprecated metric with no "replaced_by"
+  replaced-by-invalid        error    dictionary  a "replaced_by" that names a metric that is not in the dictionary, is the metric itself or is deprecated
+  formula-duplicate          warning  dictionary  two metrics with the same formula and the same filters under different names (the formula compared as text without case and spaces, or as the same structure); a deprecated metric that names the other in replaced_by is left out
+  ratio-parts-missing        warning  dictionary  a ratio or a rate whose numerator or denominator is not stated: no "numerator" and "denominator", and no division in the formula that has something on each side
+  report-unknown-metric      error    reports     a report that shows a metric id that is not in the dictionary
+  report-label-differs       warning  reports     a report that shows a metric under a label that is neither its name nor one of its aliases
+  report-shows-deprecated    warning  reports     a report that shows a deprecated metric
+  report-label-clash         error    reports     one label used for two different metric ids in the reports (a metric shown with no label counts under its name)
+  report-no-owner            warning  reports     a report with no owner (in a table, when the table has an owner column)
+
+Every check is a best practice of this tool; no standard sets it. A check of a file is about whether it can be read and which keys and columns it holds, a check of the dictionary is about its metrics and how they depend on each other, and a check of the reports is about the list of reports set against the dictionary. The tool is a read of the wording and the structure of a metric dictionary, and of a list of reports, from plain files; it does not run a formula, does not look at any data and does not know whether a definition is right or a number is correct, and it is neither a data quality tool nor an audit.

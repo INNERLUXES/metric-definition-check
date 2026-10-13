@@ -1,0 +1,14 @@
+name-clash
+
+level: error
+kind: dictionary
+
+what it looks at: one name or alias used by two different metrics (compared without case and without extra spaces): the classic way two reports show two numbers under one name; a deprecated metric that names the other in replaced_by is left out
+
+why it exists: Requiring a name or an alias to belong to one metric is a best practice of this tool; no standard sets it; a reader who sees the name in two reports cannot tell which definition stands behind the number
+
+what to change: Give each metric a name of its own that says what is different (for example "Revenue (booked)" and "Revenue (recognised)"), and remove the alias from the metric that does not own it.
+
+what it cannot see: It compares the written names and aliases. It cannot tell two names for one measure ("Sales" and "Revenue") from two measures, and it cannot see a name that is only used in a dashboard.
+
+This check is a best practice of this tool; no standard sets it. The tool is a read of the wording and the structure of a metric dictionary, and of a list of reports, from plain files; it does not run a formula, does not look at any data and does not know whether a definition is right or a number is correct, and it is neither a data quality tool nor an audit.

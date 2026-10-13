@@ -1,0 +1,972 @@
+{
+  "tool": "metric-definition-check",
+  "version": "1.0.0",
+  "input": {
+    "dictionary": {
+      "file": "examples/bad/metrics.yaml",
+      "format": "yaml",
+      "bytes": 6354,
+      "lines": 221
+    },
+    "reports": {
+      "file": "examples/bad/reports.csv",
+      "format": "csv",
+      "bytes": 346,
+      "lines": 8
+    }
+  },
+  "evaluated": {
+    "dictionary": true,
+    "reports": true
+  },
+  "summary": {
+    "dictionary": {
+      "name": "Online shop metric dictionary (with mistakes)",
+      "metrics": 21,
+      "byStatus": [
+        {
+          "value": "active",
+          "count": 15
+        },
+        {
+          "value": "deprecated",
+          "count": 3
+        },
+        {
+          "value": "(not set)",
+          "count": 2
+        },
+        {
+          "value": "draft",
+          "count": 1
+        }
+      ],
+      "byOwner": [
+        {
+          "value": "Finance",
+          "count": 9
+        },
+        {
+          "value": "Marketing",
+          "count": 5
+        },
+        {
+          "value": "Customer success",
+          "count": 3
+        },
+        {
+          "value": "(none)",
+          "count": 2
+        },
+        {
+          "value": "Logistics",
+          "count": 1
+        },
+        {
+          "value": "Sales operations",
+          "count": 1
+        }
+      ],
+      "byGrain": [
+        {
+          "value": "day",
+          "count": 15
+        },
+        {
+          "value": "month",
+          "count": 4
+        },
+        {
+          "value": "(none)",
+          "count": 1
+        },
+        {
+          "value": "week",
+          "count": 1
+        }
+      ]
+    },
+    "reports": {
+      "reports": 2,
+      "rows": 6,
+      "metricsShown": 6,
+      "metricsOnNoReport": 15,
+      "ownerColumn": true
+    }
+  },
+  "checks": [
+    {
+      "id": "file-unreadable",
+      "level": "error",
+      "kind": "file",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "field-invalid",
+      "level": "error",
+      "kind": "file",
+      "status": "fail",
+      "findings": 2,
+      "detail": "2 findings"
+    },
+    {
+      "id": "field-unknown",
+      "level": "warning",
+      "kind": "file",
+      "status": "fail",
+      "findings": 3,
+      "detail": "3 findings"
+    },
+    {
+      "id": "metric-duplicate-id",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "name-clash",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "metric-no-definition",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 2,
+      "detail": "2 findings"
+    },
+    {
+      "id": "definition-repeats-name",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "metric-no-formula",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "metric-no-unit",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "metric-no-grain",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "metric-no-owner",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 2,
+      "detail": "2 findings"
+    },
+    {
+      "id": "metric-no-source",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 2,
+      "detail": "2 findings"
+    },
+    {
+      "id": "metric-no-status",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "metric-no-period",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 2,
+      "detail": "2 findings"
+    },
+    {
+      "id": "formula-unit-mismatch",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "formula-unknown-metric",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "metric-circular",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "grain-finer-than-input",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 2,
+      "detail": "2 findings"
+    },
+    {
+      "id": "active-uses-inactive",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 2,
+      "detail": "2 findings"
+    },
+    {
+      "id": "deprecated-no-replacement",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "replaced-by-invalid",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 2,
+      "detail": "2 findings"
+    },
+    {
+      "id": "formula-duplicate",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "ratio-parts-missing",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "report-unknown-metric",
+      "level": "error",
+      "kind": "reports",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "report-label-differs",
+      "level": "warning",
+      "kind": "reports",
+      "status": "fail",
+      "findings": 2,
+      "detail": "2 findings"
+    },
+    {
+      "id": "report-shows-deprecated",
+      "level": "warning",
+      "kind": "reports",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "report-label-clash",
+      "level": "error",
+      "kind": "reports",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "report-no-owner",
+      "level": "warning",
+      "kind": "reports",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    }
+  ],
+  "totals": {
+    "findings": 38,
+    "byLevel": {
+      "error": 16,
+      "warning": 22,
+      "info": 0
+    },
+    "hidden": 0
+  },
+  "rules": [
+    {
+      "id": "file-unreadable",
+      "level": "error",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "field-invalid",
+      "level": "error",
+      "kind": "file",
+      "findings": 2
+    },
+    {
+      "id": "field-unknown",
+      "level": "warning",
+      "kind": "file",
+      "findings": 3
+    },
+    {
+      "id": "metric-duplicate-id",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 1
+    },
+    {
+      "id": "name-clash",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 1
+    },
+    {
+      "id": "metric-no-definition",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 2
+    },
+    {
+      "id": "definition-repeats-name",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 1
+    },
+    {
+      "id": "metric-no-formula",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 1
+    },
+    {
+      "id": "metric-no-unit",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 1
+    },
+    {
+      "id": "metric-no-grain",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 1
+    },
+    {
+      "id": "metric-no-owner",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 2
+    },
+    {
+      "id": "metric-no-source",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 2
+    },
+    {
+      "id": "metric-no-status",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 1
+    },
+    {
+      "id": "metric-no-period",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 2
+    },
+    {
+      "id": "formula-unit-mismatch",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 1
+    },
+    {
+      "id": "formula-unknown-metric",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 1
+    },
+    {
+      "id": "metric-circular",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 1
+    },
+    {
+      "id": "grain-finer-than-input",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 2
+    },
+    {
+      "id": "active-uses-inactive",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 2
+    },
+    {
+      "id": "deprecated-no-replacement",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 1
+    },
+    {
+      "id": "replaced-by-invalid",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 2
+    },
+    {
+      "id": "formula-duplicate",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 1
+    },
+    {
+      "id": "ratio-parts-missing",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 1
+    },
+    {
+      "id": "report-unknown-metric",
+      "level": "error",
+      "kind": "reports",
+      "findings": 1
+    },
+    {
+      "id": "report-label-differs",
+      "level": "warning",
+      "kind": "reports",
+      "findings": 2
+    },
+    {
+      "id": "report-shows-deprecated",
+      "level": "warning",
+      "kind": "reports",
+      "findings": 1
+    },
+    {
+      "id": "report-label-clash",
+      "level": "error",
+      "kind": "reports",
+      "findings": 1
+    },
+    {
+      "id": "report-no-owner",
+      "level": "warning",
+      "kind": "reports",
+      "findings": 1
+    }
+  ],
+  "options": {
+    "minSeverity": "info",
+    "failOn": "error",
+    "disabled": []
+  },
+  "findings": [
+    {
+      "id": "field-invalid",
+      "severity": "error",
+      "message": "The metric \"Returns\" has the status \"retired\"; it must be active, draft and deprecated.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 221,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:221",
+      "subject": "retired",
+      "fix": "Write the value as docs/inputs.md says. A metric or a row with a value the tool cannot use is left out of the other checks where it matters, so fix it first.",
+      "kind": "file"
+    },
+    {
+      "id": "field-invalid",
+      "severity": "error",
+      "message": "The row has 3 cells and the header has 5.",
+      "file": "examples/bad/reports.csv",
+      "line": 8,
+      "column": 1,
+      "at": "examples/bad/reports.csv:8",
+      "subject": "row",
+      "fix": "Write the value as docs/inputs.md says. A metric or a row with a value the tool cannot use is left out of the other checks where it matters, so fix it first.",
+      "kind": "file"
+    },
+    {
+      "id": "metric-duplicate-id",
+      "severity": "error",
+      "message": "The id \"orders_placed\" is used by two metrics: \"Orders placed\" at line 3 and \"Orders placed from the carrier feed\" at line 14.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 14,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:14",
+      "subject": "orders_placed",
+      "fix": "Give each metric one id. If two entries describe the same measure, merge them; if they differ, name the difference in the id and in the name.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "name-clash",
+      "severity": "error",
+      "message": "The name \"Revenue\" is used by two metrics: \"Revenue\" at line 36 and \"Net revenue\" at line 47 (one of them as an alias).",
+      "file": "examples/bad/metrics.yaml",
+      "line": 47,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:47",
+      "subject": "Revenue",
+      "fix": "Give each metric a name of its own that says what is different (for example \"Revenue (booked)\" and \"Revenue (recognised)\"), and remove the alias from the metric that does not own it.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "formula-unknown-metric",
+      "severity": "error",
+      "message": "The metric \"Net revenue\" names the metric \"refund\", which is not in the dictionary. The nearest id is \"refunds\".",
+      "file": "examples/bad/metrics.yaml",
+      "line": 52,
+      "column": 14,
+      "at": "examples/bad/metrics.yaml:52",
+      "subject": "refund",
+      "fix": "Correct the id, add the metric to the dictionary, or write the part as a source field (without braces) if it is not a metric.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "metric-no-definition",
+      "severity": "error",
+      "message": "The metric \"Refunds\" has no written definition, so nothing says in words what is counted or measured.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 59,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:59",
+      "subject": "Refunds",
+      "fix": "Write the definition in the \"definition\" key in a sentence or two, in the words a reader of the report would use, and say what is in and what is out.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "formula-unit-mismatch",
+      "severity": "error",
+      "message": "The metric \"Revenue plus orders\" adds or subtracts metrics of different units: \"Revenue\" in USD and \"Orders placed\" in count.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 70,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:70",
+      "subject": "Revenue plus orders",
+      "fix": "Convert one side first (for example with a price) or use a different formula. If the two units are the same unit under two spellings, write them the same way.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "active-uses-inactive",
+      "severity": "error",
+      "message": "The metric \"Net sales\" is active and is built on \"Revenue (legacy)\", which is deprecated (replaced by \"net_revenu\").",
+      "file": "examples/bad/metrics.yaml",
+      "line": 80,
+      "column": 14,
+      "at": "examples/bad/metrics.yaml:80",
+      "subject": "revenue_legacy",
+      "fix": "Move the active metric to the active or replacing metric, or finish the draft before the active metric depends on it.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "active-uses-inactive",
+      "severity": "error",
+      "message": "The metric \"Net sales\" is active and is built on \"Weekly revenue forecast\", which is draft.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 80,
+      "column": 14,
+      "at": "examples/bad/metrics.yaml:80",
+      "subject": "weekly_revenue_forecast",
+      "fix": "Move the active metric to the active or replacing metric, or finish the draft before the active metric depends on it.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "metric-no-formula",
+      "severity": "error",
+      "message": "The metric \"Customers in total\" has no formula, so nothing says how the number is worked out.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 108,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:108",
+      "subject": "Customers in total",
+      "fix": "Write the formula in \"formula\" as text (naming other metrics as {metric_id}) or as a structure with op and args.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "metric-circular",
+      "severity": "error",
+      "message": "2 metrics depend on each other in a circle: \"Gross margin\" and \"Margin rate\".",
+      "file": "examples/bad/metrics.yaml",
+      "line": 147,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:147",
+      "subject": "Gross margin",
+      "fix": "Break the circle: one of the metrics in it must be worked out from source fields, not from the next one in the circle.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "replaced-by-invalid",
+      "severity": "error",
+      "message": "The metric \"Revenue (legacy)\" is replaced by \"net_revenu\", which is not in the dictionary. The nearest id is \"net_revenue\".",
+      "file": "examples/bad/metrics.yaml",
+      "line": 176,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:176",
+      "subject": "net_revenu",
+      "fix": "Point replaced_by at an active metric of the dictionary, or at the last metric of the chain.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "replaced-by-invalid",
+      "severity": "error",
+      "message": "The metric \"Visits (older)\" is replaced by \"Visits (old)\", which is deprecated too.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 199,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:199",
+      "subject": "visits_old",
+      "fix": "Point replaced_by at an active metric of the dictionary, or at the last metric of the chain.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "metric-no-definition",
+      "severity": "error",
+      "message": "The metric \"Returns\" has no written definition, so nothing says in words what is counted or measured.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 211,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:211",
+      "subject": "Returns",
+      "fix": "Write the definition in the \"definition\" key in a sentence or two, in the words a reader of the report would use, and say what is in and what is out.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "report-unknown-metric",
+      "severity": "error",
+      "message": "The report \"Weekly sales summary\" shows the metric \"revenu\", which is not in the dictionary. The nearest id is \"revenue\".",
+      "file": "examples/bad/reports.csv",
+      "line": 3,
+      "column": 39,
+      "at": "examples/bad/reports.csv:3",
+      "subject": "revenu",
+      "fix": "Correct the id, add the metric to the dictionary, or take it off the report. If the report uses a name there, write the id.",
+      "kind": "reports"
+    },
+    {
+      "id": "report-label-clash",
+      "severity": "error",
+      "message": "The report \"Finance pack\" shows \"Gross margin\" under the label \"Revenue\", the label that Finance pack uses for \"Revenue\" (line 5).",
+      "file": "examples/bad/reports.csv",
+      "line": 7,
+      "column": 15,
+      "at": "examples/bad/reports.csv:7",
+      "subject": "Revenue",
+      "fix": "Give each metric one label of its own on every report, so a reader who sees the label in two places gets the same number.",
+      "kind": "reports"
+    },
+    {
+      "id": "field-unknown",
+      "severity": "warning",
+      "message": "The metric at line 211 has the key \"defintion\", which the tool does not read; nothing under it is checked. Did you mean \"definition\"?",
+      "file": "examples/bad/metrics.yaml",
+      "line": 213,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:213",
+      "subject": "defintion",
+      "fix": "Correct the name to a key or column of docs/inputs.md, or take it out of the file.",
+      "kind": "file"
+    },
+    {
+      "id": "field-unknown",
+      "severity": "warning",
+      "message": "The metric at line 211 has the key \"ownr\", which the tool does not read; nothing under it is checked. Did you mean \"owner\"?",
+      "file": "examples/bad/metrics.yaml",
+      "line": 219,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:219",
+      "subject": "ownr",
+      "fix": "Correct the name to a key or column of docs/inputs.md, or take it out of the file.",
+      "kind": "file"
+    },
+    {
+      "id": "field-unknown",
+      "severity": "warning",
+      "message": "The column \"notes\" is not one the tool reads; its cells are not read.",
+      "file": "examples/bad/reports.csv",
+      "line": 1,
+      "column": 27,
+      "at": "examples/bad/reports.csv:1",
+      "subject": "notes",
+      "fix": "Correct the name to a key or column of docs/inputs.md, or take it out of the file.",
+      "kind": "file"
+    },
+    {
+      "id": "formula-duplicate",
+      "severity": "warning",
+      "message": "The metric \"Order count\" has the same formula as \"Orders placed\" at line 3 (\"count_distinct(orders.order_id)\") under another name.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 29,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:29",
+      "subject": "Order count",
+      "fix": "Keep one metric and make the other an alias, or write down what makes them different: a filter, a period, a source.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "definition-repeats-name",
+      "severity": "warning",
+      "message": "The metric \"Revenue\" has a definition that is only its name said again (\"Revenue\").",
+      "file": "examples/bad/metrics.yaml",
+      "line": 38,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:38",
+      "subject": "Revenue",
+      "fix": "Say what is counted, for whom and over what period, and what is left out. A definition must tell a reader something the name does not.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "metric-no-source",
+      "severity": "warning",
+      "message": "The metric \"Refunds\" has no source system, so nothing says where its data comes from.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 59,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:59",
+      "subject": "Refunds",
+      "fix": "Write the system or systems in \"source\", for example the billing system or the order database.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "metric-no-unit",
+      "severity": "warning",
+      "message": "The metric \"Refunds\" has no unit, such as a currency, count, percent or days.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 59,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:59",
+      "subject": "Refunds",
+      "fix": "Write the unit in \"unit\", such as USD, count, percent or days. Use the same word for the same unit everywhere.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "grain-finer-than-input",
+      "severity": "warning",
+      "message": "The metric \"Net sales\" has the grain \"day\", which is finer than \"week\" of \"Weekly revenue forecast\" that it is built on, and gives no \"aggregation\" note.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 82,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:82",
+      "subject": "Net sales",
+      "fix": "Say in \"aggregation\" how the coarser input is spread down to the finer grain, or move the metric to the grain of its inputs.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "metric-no-period",
+      "severity": "warning",
+      "message": "The metric \"Active customers\" looks like a rate, a ratio or a count (its type is count) and has no period or time window rule, so nothing says over what time it is measured.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 87,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:87",
+      "subject": "Active customers",
+      "fix": "Write the period in \"period\", such as \"calendar month\", \"trailing 28 days\" or \"as at the last day of the month\", or set the type to snapshot if the metric is a point in time.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "ratio-parts-missing",
+      "severity": "warning",
+      "message": "The metric \"Churn rate\" is a ratio and does not state the numerator and the denominator: write \"numerator\" and \"denominator\", or the division in the formula.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 97,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:97",
+      "subject": "Churn rate",
+      "fix": "Write the \"numerator\" and the \"denominator\" in words (or as {metric_id}), or write the division in the formula.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "metric-no-grain",
+      "severity": "warning",
+      "message": "The metric \"Page visits\" has no grain, so nothing says the level it is calculated at.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 116,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:116",
+      "subject": "Page visits",
+      "fix": "Write the grain in \"grain\", such as order, day, customer or month: the thing that one row of the result stands for.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "metric-no-owner",
+      "severity": "warning",
+      "message": "The metric \"Page visits\" has no owner, so nobody is named who decides its definition.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 116,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:116",
+      "subject": "Page visits",
+      "fix": "Write the person, role or team in \"owner\". A role or a team is better than a person who may leave.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "metric-no-period",
+      "severity": "warning",
+      "message": "The metric \"Page visits\" looks like a rate, a ratio or a count and has no period or time window rule, so nothing says over what time it is measured.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 116,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:116",
+      "subject": "Page visits",
+      "fix": "Write the period in \"period\", such as \"calendar month\", \"trailing 28 days\" or \"as at the last day of the month\", or set the type to snapshot if the metric is a point in time.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "metric-no-source",
+      "severity": "warning",
+      "message": "The metric \"Page visits\" has no source system, so nothing says where its data comes from.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 116,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:116",
+      "subject": "Page visits",
+      "fix": "Write the system or systems in \"source\", for example the billing system or the order database.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "metric-no-status",
+      "severity": "warning",
+      "message": "The metric \"Page visits\" has no status (active, draft or deprecated); it is read as active.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 116,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:116",
+      "subject": "Page visits",
+      "fix": "Write the status in \"status\": active, draft or deprecated.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "grain-finer-than-input",
+      "severity": "warning",
+      "message": "The metric \"Daily signup share\" has the grain \"day\", which is finer than \"month\" of \"Monthly signups\" that it is built on, and gives no \"aggregation\" note.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 138,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:138",
+      "subject": "Daily signup share",
+      "fix": "Say in \"aggregation\" how the coarser input is spread down to the finer grain, or move the metric to the grain of its inputs.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "deprecated-no-replacement",
+      "severity": "warning",
+      "message": "The metric \"Visits (old)\" is deprecated and has no \"replaced_by\", so a reader of a report that still shows it is not told what to use.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 187,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:187",
+      "subject": "Visits (old)",
+      "fix": "Name the metric that replaces it in \"replaced_by\", or say in \"note\" that nothing does.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "metric-no-owner",
+      "severity": "warning",
+      "message": "The metric \"Returns\" has no owner, so nobody is named who decides its definition.",
+      "file": "examples/bad/metrics.yaml",
+      "line": 211,
+      "column": 5,
+      "at": "examples/bad/metrics.yaml:211",
+      "subject": "Returns",
+      "fix": "Write the person, role or team in \"owner\". A role or a team is better than a person who may leave.",
+      "kind": "dictionary"
+    },
+    {
+      "id": "report-label-differs",
+      "severity": "warning",
+      "message": "The report \"Weekly sales summary\" shows \"Net revenue\" as \"Sales\", which is not its name or one of its aliases.",
+      "file": "examples/bad/reports.csv",
+      "line": 4,
+      "column": 51,
+      "at": "examples/bad/reports.csv:4",
+      "subject": "Sales",
+      "fix": "Use the name of the dictionary on the report, or add the label to the aliases of that metric (and see that it belongs to no other).",
+      "kind": "reports"
+    },
+    {
+      "id": "report-no-owner",
+      "severity": "warning",
+      "message": "The report \"Finance pack\" has no owner, so nobody is named who can answer for its numbers.",
+      "file": "examples/bad/reports.csv",
+      "line": 5,
+      "column": 14,
+      "at": "examples/bad/reports.csv:5",
+      "subject": "Finance pack",
+      "fix": "Write the person, role or team that answers for the report in \"owner\".",
+      "kind": "reports"
+    },
+    {
+      "id": "report-shows-deprecated",
+      "severity": "warning",
+      "message": "The report \"Finance pack\" shows \"Revenue (legacy)\", which is deprecated (replaced by \"net_revenu\").",
+      "file": "examples/bad/reports.csv",
+      "line": 6,
+      "column": 15,
+      "at": "examples/bad/reports.csv:6",
+      "subject": "revenue_legacy",
+      "fix": "Move the report to the metric named in replaced_by, or keep it on purpose and say why in the note of the metric.",
+      "kind": "reports"
+    },
+    {
+      "id": "report-label-differs",
+      "severity": "warning",
+      "message": "The report \"Finance pack\" shows \"Gross margin\" as \"Revenue\", which is not its name or one of its aliases.",
+      "file": "examples/bad/reports.csv",
+      "line": 7,
+      "column": 28,
+      "at": "examples/bad/reports.csv:7",
+      "subject": "Revenue",
+      "fix": "Use the name of the dictionary on the report, or add the label to the aliases of that metric (and see that it belongs to no other).",
+      "kind": "reports"
+    }
+  ],
+  "notes": [],
+  "notice": "This report reads the dictionary file and the reports file and nothing else. It never connects to data and never runs a formula. A clean result means that none of the problems of its checks were found in them; it is not a statement that the definitions are right, that the numbers are correct or that the reports show what they say.",
+  "result": {
+    "pass": false,
+    "failOn": "error",
+    "text": "FAIL - 16 findings at or above error (16 error, 22 warning)"
+  }
+}

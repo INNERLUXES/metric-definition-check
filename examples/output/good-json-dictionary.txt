@@ -1,0 +1,64 @@
+metric-definition-check: examples/good/metrics.json + examples/good/reports.csv
+dictionary file: examples/good/metrics.json (json, 125 lines, 4,561 bytes)
+reports file: examples/good/reports.csv (csv, 8 lines, 386 bytes)
+dictionary: Subscription product metric dictionary: 8 metrics
+reports: 3 reports, 7 metrics shown, 7 different metrics; 1 metric of the dictionary on no report
+findings: 0
+
+Metrics for each status
+
+  status      metrics
+  active      7
+  deprecated  1
+
+Metrics for each owner
+
+  owner    metrics
+  Growth   4
+  Finance  3
+  Product  1
+
+Metrics for each grain
+
+  grain  metrics
+  month  8
+
+Checks (28)
+
+  check                      level    kind        status  findings
+  file-unreadable            error    file        pass    0
+  field-invalid              error    file        pass    0
+  field-unknown              warning  file        pass    0
+  metric-duplicate-id        error    dictionary  pass    0
+  name-clash                 error    dictionary  pass    0
+  metric-no-definition       error    dictionary  pass    0
+  definition-repeats-name    warning  dictionary  pass    0
+  metric-no-formula          error    dictionary  pass    0
+  metric-no-unit             warning  dictionary  pass    0
+  metric-no-grain            warning  dictionary  pass    0
+  metric-no-owner            warning  dictionary  pass    0
+  metric-no-source           warning  dictionary  pass    0
+  metric-no-status           warning  dictionary  pass    0
+  metric-no-period           warning  dictionary  pass    0
+  formula-unit-mismatch      error    dictionary  pass    0
+  formula-unknown-metric     error    dictionary  pass    0
+  metric-circular            error    dictionary  pass    0
+  grain-finer-than-input     warning  dictionary  pass    0
+  active-uses-inactive       error    dictionary  pass    0
+  deprecated-no-replacement  warning  dictionary  pass    0
+  replaced-by-invalid        error    dictionary  pass    0
+  formula-duplicate          warning  dictionary  pass    0
+  ratio-parts-missing        warning  dictionary  pass    0
+  report-unknown-metric      error    reports     pass    0
+  report-label-differs       warning  reports     pass    0
+  report-shows-deprecated    warning  reports     pass    0
+  report-label-clash         error    reports     pass    0
+  report-no-owner            warning  reports     pass    0
+
+Findings (0)
+
+  none
+
+This report reads the dictionary file and the reports file and nothing else. It never connects to data and never runs a formula. A clean result means that none of the problems of its checks were found in them; it is not a statement that the definitions are right, that the numbers are correct or that the reports show what they say.
+
+RESULT: PASS - no finding at or above error

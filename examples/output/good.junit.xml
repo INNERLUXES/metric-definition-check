@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="metric-definition-check" tests="28" failures="0" errors="0" time="0">
+  <testsuite name="metric-dictionary" tests="28" failures="0" errors="0" skipped="0" time="0">
+    <testcase classname="metric-dictionary" name="file-unreadable" time="0"/>
+    <testcase classname="metric-dictionary" name="field-invalid" time="0"/>
+    <testcase classname="metric-dictionary" name="field-unknown" time="0"/>
+    <testcase classname="metric-dictionary" name="metric-duplicate-id" time="0"/>
+    <testcase classname="metric-dictionary" name="name-clash" time="0"/>
+    <testcase classname="metric-dictionary" name="metric-no-definition" time="0"/>
+    <testcase classname="metric-dictionary" name="definition-repeats-name" time="0"/>
+    <testcase classname="metric-dictionary" name="metric-no-formula" time="0"/>
+    <testcase classname="metric-dictionary" name="metric-no-unit" time="0"/>
+    <testcase classname="metric-dictionary" name="metric-no-grain" time="0"/>
+    <testcase classname="metric-dictionary" name="metric-no-owner" time="0"/>
+    <testcase classname="metric-dictionary" name="metric-no-source" time="0"/>
+    <testcase classname="metric-dictionary" name="metric-no-status" time="0"/>
+    <testcase classname="metric-dictionary" name="metric-no-period" time="0"/>
+    <testcase classname="metric-dictionary" name="formula-unit-mismatch" time="0"/>
+    <testcase classname="metric-dictionary" name="formula-unknown-metric" time="0"/>
+    <testcase classname="metric-dictionary" name="metric-circular" time="0"/>
+    <testcase classname="metric-dictionary" name="grain-finer-than-input" time="0"/>
+    <testcase classname="metric-dictionary" name="active-uses-inactive" time="0"/>
+    <testcase classname="metric-dictionary" name="deprecated-no-replacement" time="0"/>
+    <testcase classname="metric-dictionary" name="replaced-by-invalid" time="0"/>
+    <testcase classname="metric-dictionary" name="formula-duplicate" time="0"/>
+    <testcase classname="metric-dictionary" name="ratio-parts-missing" time="0"/>
+    <testcase classname="metric-dictionary" name="report-unknown-metric" time="0"/>
+    <testcase classname="metric-dictionary" name="report-label-differs" time="0"/>
+    <testcase classname="metric-dictionary" name="report-shows-deprecated" time="0"/>
+    <testcase classname="metric-dictionary" name="report-label-clash" time="0"/>
+    <testcase classname="metric-dictionary" name="report-no-owner" time="0"/>
+  </testsuite>
+</testsuites>

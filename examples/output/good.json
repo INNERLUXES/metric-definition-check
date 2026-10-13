@@ -1,0 +1,499 @@
+{
+  "tool": "metric-definition-check",
+  "version": "1.0.0",
+  "input": {
+    "dictionary": {
+      "file": "examples/good/metrics.yaml",
+      "format": "yaml",
+      "bytes": 6067,
+      "lines": 174
+    },
+    "reports": {
+      "file": "examples/good/reports.yaml",
+      "format": "yaml",
+      "bytes": 577,
+      "lines": 23
+    }
+  },
+  "evaluated": {
+    "dictionary": true,
+    "reports": true
+  },
+  "summary": {
+    "dictionary": {
+      "name": "Online shop metric dictionary",
+      "metrics": 14,
+      "byStatus": [
+        {
+          "value": "active",
+          "count": 12
+        },
+        {
+          "value": "deprecated",
+          "count": 1
+        },
+        {
+          "value": "draft",
+          "count": 1
+        }
+      ],
+      "byOwner": [
+        {
+          "value": "Customer success",
+          "count": 5
+        },
+        {
+          "value": "Finance",
+          "count": 4
+        },
+        {
+          "value": "Logistics",
+          "count": 3
+        },
+        {
+          "value": "Sales operations",
+          "count": 2
+        }
+      ],
+      "byGrain": [
+        {
+          "value": "day",
+          "count": 8
+        },
+        {
+          "value": "month",
+          "count": 5
+        },
+        {
+          "value": "quarter",
+          "count": 1
+        }
+      ]
+    },
+    "reports": {
+      "reports": 3,
+      "rows": 8,
+      "metricsShown": 8,
+      "metricsOnNoReport": 6,
+      "ownerColumn": true
+    }
+  },
+  "checks": [
+    {
+      "id": "file-unreadable",
+      "level": "error",
+      "kind": "file",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "field-invalid",
+      "level": "error",
+      "kind": "file",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "field-unknown",
+      "level": "warning",
+      "kind": "file",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "metric-duplicate-id",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "name-clash",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "metric-no-definition",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "definition-repeats-name",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "metric-no-formula",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "metric-no-unit",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "metric-no-grain",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "metric-no-owner",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "metric-no-source",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "metric-no-status",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "metric-no-period",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "formula-unit-mismatch",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "formula-unknown-metric",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "metric-circular",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "grain-finer-than-input",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "active-uses-inactive",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "deprecated-no-replacement",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "replaced-by-invalid",
+      "level": "error",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "formula-duplicate",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "ratio-parts-missing",
+      "level": "warning",
+      "kind": "dictionary",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "report-unknown-metric",
+      "level": "error",
+      "kind": "reports",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "report-label-differs",
+      "level": "warning",
+      "kind": "reports",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "report-shows-deprecated",
+      "level": "warning",
+      "kind": "reports",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "report-label-clash",
+      "level": "error",
+      "kind": "reports",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "report-no-owner",
+      "level": "warning",
+      "kind": "reports",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    }
+  ],
+  "totals": {
+    "findings": 0,
+    "byLevel": {
+      "error": 0,
+      "warning": 0,
+      "info": 0
+    },
+    "hidden": 0
+  },
+  "rules": [
+    {
+      "id": "file-unreadable",
+      "level": "error",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "field-invalid",
+      "level": "error",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "field-unknown",
+      "level": "warning",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "metric-duplicate-id",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "name-clash",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "metric-no-definition",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "definition-repeats-name",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "metric-no-formula",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "metric-no-unit",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "metric-no-grain",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "metric-no-owner",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "metric-no-source",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "metric-no-status",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "metric-no-period",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "formula-unit-mismatch",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "formula-unknown-metric",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "metric-circular",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "grain-finer-than-input",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "active-uses-inactive",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "deprecated-no-replacement",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "replaced-by-invalid",
+      "level": "error",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "formula-duplicate",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "ratio-parts-missing",
+      "level": "warning",
+      "kind": "dictionary",
+      "findings": 0
+    },
+    {
+      "id": "report-unknown-metric",
+      "level": "error",
+      "kind": "reports",
+      "findings": 0
+    },
+    {
+      "id": "report-label-differs",
+      "level": "warning",
+      "kind": "reports",
+      "findings": 0
+    },
+    {
+      "id": "report-shows-deprecated",
+      "level": "warning",
+      "kind": "reports",
+      "findings": 0
+    },
+    {
+      "id": "report-label-clash",
+      "level": "error",
+      "kind": "reports",
+      "findings": 0
+    },
+    {
+      "id": "report-no-owner",
+      "level": "warning",
+      "kind": "reports",
+      "findings": 0
+    }
+  ],
+  "options": {
+    "minSeverity": "info",
+    "failOn": "error",
+    "disabled": []
+  },
+  "findings": [],
+  "notes": [],
+  "notice": "This report reads the dictionary file and the reports file and nothing else. It never connects to data and never runs a formula. A clean result means that none of the problems of its checks were found in them; it is not a statement that the definitions are right, that the numbers are correct or that the reports show what they say.",
+  "result": {
+    "pass": true,
+    "failOn": "error",
+    "text": "PASS - no finding at or above error"
+  }
+}

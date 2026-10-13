@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="metric-definition-check" tests="28" failures="27" errors="0" time="0">
+  <testsuite name="metric-dictionary" tests="28" failures="27" errors="0" skipped="0" time="0">
+    <testcase classname="metric-dictionary" name="file-unreadable" time="0"/>
+    <testcase classname="metric-dictionary" name="field-invalid" time="0">
+      <failure type="field-invalid" message="2 findings">examples/bad/metrics.yaml:221: The metric &quot;Returns&quot; has the status &quot;retired&quot;; it must be active, draft and deprecated.
+examples/bad/reports.csv:8: The row has 3 cells and the header has 5.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="field-unknown" time="0">
+      <failure type="field-unknown" message="3 findings">examples/bad/metrics.yaml:213: The metric at line 211 has the key &quot;defintion&quot;, which the tool does not read; nothing under it is checked. Did you mean &quot;definition&quot;?
+examples/bad/metrics.yaml:219: The metric at line 211 has the key &quot;ownr&quot;, which the tool does not read; nothing under it is checked. Did you mean &quot;owner&quot;?
+examples/bad/reports.csv:1: The column &quot;notes&quot; is not one the tool reads; its cells are not read.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="metric-duplicate-id" time="0">
+      <failure type="metric-duplicate-id" message="1 finding">examples/bad/metrics.yaml:14: The id &quot;orders_placed&quot; is used by two metrics: &quot;Orders placed&quot; at line 3 and &quot;Orders placed from the carrier feed&quot; at line 14.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="name-clash" time="0">
+      <failure type="name-clash" message="1 finding">examples/bad/metrics.yaml:47: The name &quot;Revenue&quot; is used by two metrics: &quot;Revenue&quot; at line 36 and &quot;Net revenue&quot; at line 47 (one of them as an alias).</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="metric-no-definition" time="0">
+      <failure type="metric-no-definition" message="2 findings">examples/bad/metrics.yaml:59: The metric &quot;Refunds&quot; has no written definition, so nothing says in words what is counted or measured.
+examples/bad/metrics.yaml:211: The metric &quot;Returns&quot; has no written definition, so nothing says in words what is counted or measured.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="definition-repeats-name" time="0">
+      <failure type="definition-repeats-name" message="1 finding">examples/bad/metrics.yaml:38: The metric &quot;Revenue&quot; has a definition that is only its name said again (&quot;Revenue&quot;).</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="metric-no-formula" time="0">
+      <failure type="metric-no-formula" message="1 finding">examples/bad/metrics.yaml:108: The metric &quot;Customers in total&quot; has no formula, so nothing says how the number is worked out.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="metric-no-unit" time="0">
+      <failure type="metric-no-unit" message="1 finding">examples/bad/metrics.yaml:59: The metric &quot;Refunds&quot; has no unit, such as a currency, count, percent or days.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="metric-no-grain" time="0">
+      <failure type="metric-no-grain" message="1 finding">examples/bad/metrics.yaml:116: The metric &quot;Page visits&quot; has no grain, so nothing says the level it is calculated at.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="metric-no-owner" time="0">
+      <failure type="metric-no-owner" message="2 findings">examples/bad/metrics.yaml:116: The metric &quot;Page visits&quot; has no owner, so nobody is named who decides its definition.
+examples/bad/metrics.yaml:211: The metric &quot;Returns&quot; has no owner, so nobody is named who decides its definition.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="metric-no-source" time="0">
+      <failure type="metric-no-source" message="2 findings">examples/bad/metrics.yaml:59: The metric &quot;Refunds&quot; has no source system, so nothing says where its data comes from.
+examples/bad/metrics.yaml:116: The metric &quot;Page visits&quot; has no source system, so nothing says where its data comes from.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="metric-no-status" time="0">
+      <failure type="metric-no-status" message="1 finding">examples/bad/metrics.yaml:116: The metric &quot;Page visits&quot; has no status (active, draft or deprecated); it is read as active.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="metric-no-period" time="0">
+      <failure type="metric-no-period" message="2 findings">examples/bad/metrics.yaml:87: The metric &quot;Active customers&quot; looks like a rate, a ratio or a count (its type is count) and has no period or time window rule, so nothing says over what time it is measured.
+examples/bad/metrics.yaml:116: The metric &quot;Page visits&quot; looks like a rate, a ratio or a count and has no period or time window rule, so nothing says over what time it is measured.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="formula-unit-mismatch" time="0">
+      <failure type="formula-unit-mismatch" message="1 finding">examples/bad/metrics.yaml:70: The metric &quot;Revenue plus orders&quot; adds or subtracts metrics of different units: &quot;Revenue&quot; in USD and &quot;Orders placed&quot; in count.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="formula-unknown-metric" time="0">
+      <failure type="formula-unknown-metric" message="1 finding">examples/bad/metrics.yaml:52: The metric &quot;Net revenue&quot; names the metric &quot;refund&quot;, which is not in the dictionary. The nearest id is &quot;refunds&quot;.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="metric-circular" time="0">
+      <failure type="metric-circular" message="1 finding">examples/bad/metrics.yaml:147: 2 metrics depend on each other in a circle: &quot;Gross margin&quot; and &quot;Margin rate&quot;.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="grain-finer-than-input" time="0">
+      <failure type="grain-finer-than-input" message="2 findings">examples/bad/metrics.yaml:82: The metric &quot;Net sales&quot; has the grain &quot;day&quot;, which is finer than &quot;week&quot; of &quot;Weekly revenue forecast&quot; that it is built on, and gives no &quot;aggregation&quot; note.
+examples/bad/metrics.yaml:138: The metric &quot;Daily signup share&quot; has the grain &quot;day&quot;, which is finer than &quot;month&quot; of &quot;Monthly signups&quot; that it is built on, and gives no &quot;aggregation&quot; note.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="active-uses-inactive" time="0">
+      <failure type="active-uses-inactive" message="2 findings">examples/bad/metrics.yaml:80: The metric &quot;Net sales&quot; is active and is built on &quot;Revenue (legacy)&quot;, which is deprecated (replaced by &quot;net_revenu&quot;).
+examples/bad/metrics.yaml:80: The metric &quot;Net sales&quot; is active and is built on &quot;Weekly revenue forecast&quot;, which is draft.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="deprecated-no-replacement" time="0">
+      <failure type="deprecated-no-replacement" message="1 finding">examples/bad/metrics.yaml:187: The metric &quot;Visits (old)&quot; is deprecated and has no &quot;replaced_by&quot;, so a reader of a report that still shows it is not told what to use.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="replaced-by-invalid" time="0">
+      <failure type="replaced-by-invalid" message="2 findings">examples/bad/metrics.yaml:176: The metric &quot;Revenue (legacy)&quot; is replaced by &quot;net_revenu&quot;, which is not in the dictionary. The nearest id is &quot;net_revenue&quot;.
+examples/bad/metrics.yaml:199: The metric &quot;Visits (older)&quot; is replaced by &quot;Visits (old)&quot;, which is deprecated too.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="formula-duplicate" time="0">
+      <failure type="formula-duplicate" message="1 finding">examples/bad/metrics.yaml:29: The metric &quot;Order count&quot; has the same formula as &quot;Orders placed&quot; at line 3 (&quot;count_distinct(orders.order_id)&quot;) under another name.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="ratio-parts-missing" time="0">
+      <failure type="ratio-parts-missing" message="1 finding">examples/bad/metrics.yaml:97: The metric &quot;Churn rate&quot; is a ratio and does not state the numerator and the denominator: write &quot;numerator&quot; and &quot;denominator&quot;, or the division in the formula.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="report-unknown-metric" time="0">
+      <failure type="report-unknown-metric" message="1 finding">examples/bad/reports.csv:3: The report &quot;Weekly sales summary&quot; shows the metric &quot;revenu&quot;, which is not in the dictionary. The nearest id is &quot;revenue&quot;.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="report-label-differs" time="0">
+      <failure type="report-label-differs" message="2 findings">examples/bad/reports.csv:4: The report &quot;Weekly sales summary&quot; shows &quot;Net revenue&quot; as &quot;Sales&quot;, which is not its name or one of its aliases.
+examples/bad/reports.csv:7: The report &quot;Finance pack&quot; shows &quot;Gross margin&quot; as &quot;Revenue&quot;, which is not its name or one of its aliases.</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="report-shows-deprecated" time="0">
+      <failure type="report-shows-deprecated" message="1 finding">examples/bad/reports.csv:6: The report &quot;Finance pack&quot; shows &quot;Revenue (legacy)&quot;, which is deprecated (replaced by &quot;net_revenu&quot;).</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="report-label-clash" time="0">
+      <failure type="report-label-clash" message="1 finding">examples/bad/reports.csv:7: The report &quot;Finance pack&quot; shows &quot;Gross margin&quot; under the label &quot;Revenue&quot;, the label that Finance pack uses for &quot;Revenue&quot; (line 5).</failure>
+    </testcase>
+    <testcase classname="metric-dictionary" name="report-no-owner" time="0">
+      <failure type="report-no-owner" message="1 finding">examples/bad/reports.csv:5: The report &quot;Finance pack&quot; has no owner, so nobody is named who can answer for its numbers.</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

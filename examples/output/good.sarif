@@ -1,0 +1,482 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "metric-definition-check",
+          "version": "1.0.0",
+          "informationUri": "https://github.com/INNERLUXES/metric-definition-check",
+          "rules": [
+            {
+              "id": "file-unreadable",
+              "name": "file-unreadable",
+              "shortDescription": {
+                "text": "a file cannot be followed by the reader (a syntax error in the YAML subset or the JSON, a dictionary with no metrics, a reports table with a quote that is never closed or a header without the columns it needs, or a file past a limit); no other check ran on that file"
+              },
+              "help": {
+                "text": "Fix the line and column named; docs/inputs.md lists the YAML subset, the keys of a dictionary and the keys and columns of a reports file. (file)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "file"
+              }
+            },
+            {
+              "id": "field-invalid",
+              "name": "field-invalid",
+              "shortDescription": {
+                "text": "a value is not what the format says: a metric with no id or no name, a status that is not active, draft or deprecated, a type the tool does not know, a formula that cannot be followed (a { never closed, an op with no args), a value that is not text, or a row with the wrong number of cells"
+              },
+              "help": {
+                "text": "Write the value as docs/inputs.md says. A metric or a row with a value the tool cannot use is left out of the other checks where it matters, so fix it first. (file)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "file"
+              }
+            },
+            {
+              "id": "field-unknown",
+              "name": "field-unknown",
+              "shortDescription": {
+                "text": "a key of the dictionary, of a metric, of the reports file or of a report, or a column of a reports table, that the tool does not read, often a misspelt name such as defintion or ownr; what is under it is not checked"
+              },
+              "help": {
+                "text": "Correct the name to a key or column of docs/inputs.md, or take it out of the file. (file)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "file"
+              }
+            },
+            {
+              "id": "metric-duplicate-id",
+              "name": "metric-duplicate-id",
+              "shortDescription": {
+                "text": "two metrics with the same id (compared without case and without extra spaces)"
+              },
+              "help": {
+                "text": "Give each metric one id. If two entries describe the same measure, merge them; if they differ, name the difference in the id and in the name. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "name-clash",
+              "name": "name-clash",
+              "shortDescription": {
+                "text": "one name or alias used by two different metrics (compared without case and without extra spaces): the classic way two reports show two numbers under one name; a deprecated metric that names the other in replaced_by is left out"
+              },
+              "help": {
+                "text": "Give each metric a name of its own that says what is different (for example \"Revenue (booked)\" and \"Revenue (recognised)\"), and remove the alias from the metric that does not own it. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "metric-no-definition",
+              "name": "metric-no-definition",
+              "shortDescription": {
+                "text": "a metric with no written definition: nothing says in words what is counted or measured"
+              },
+              "help": {
+                "text": "Write the definition in the \"definition\" key in a sentence or two, in the words a reader of the report would use, and say what is in and what is out. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "definition-repeats-name",
+              "name": "definition-repeats-name",
+              "shortDescription": {
+                "text": "a definition that is only the name said again, such as \"Revenue\" for the metric Revenue or \"The number of active customers\" for Active customers"
+              },
+              "help": {
+                "text": "Say what is counted, for whom and over what period, and what is left out. A definition must tell a reader something the name does not. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "metric-no-formula",
+              "name": "metric-no-formula",
+              "shortDescription": {
+                "text": "a metric with no formula (no \"formula\" key, or an empty one): nothing says how the number is worked out"
+              },
+              "help": {
+                "text": "Write the formula in \"formula\" as text (naming other metrics as {metric_id}) or as a structure with op and args. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "metric-no-unit",
+              "name": "metric-no-unit",
+              "shortDescription": {
+                "text": "a metric with no unit (currency, count, percent, days and so on)"
+              },
+              "help": {
+                "text": "Write the unit in \"unit\", such as USD, count, percent or days. Use the same word for the same unit everywhere. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "metric-no-grain",
+              "name": "metric-no-grain",
+              "shortDescription": {
+                "text": "a metric with no grain: nothing says the level it is calculated at (order, day, customer and so on)"
+              },
+              "help": {
+                "text": "Write the grain in \"grain\", such as order, day, customer or month: the thing that one row of the result stands for. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "metric-no-owner",
+              "name": "metric-no-owner",
+              "shortDescription": {
+                "text": "a metric with no owner: nobody is named who decides what the definition is"
+              },
+              "help": {
+                "text": "Write the person, role or team in \"owner\". A role or a team is better than a person who may leave. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "metric-no-source",
+              "name": "metric-no-source",
+              "shortDescription": {
+                "text": "a metric with no source system: nothing says where the data comes from"
+              },
+              "help": {
+                "text": "Write the system or systems in \"source\", for example the billing system or the order database. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "metric-no-status",
+              "name": "metric-no-status",
+              "shortDescription": {
+                "text": "a metric with no status (active, draft or deprecated); the tool reads it as active for the other checks"
+              },
+              "help": {
+                "text": "Write the status in \"status\": active, draft or deprecated. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "metric-no-period",
+              "name": "metric-no-period",
+              "shortDescription": {
+                "text": "a rate, a ratio or a count with no period or time window rule (no \"period\" key): \"active customers\" in which days, \"churn\" over what month; a metric of type snapshot is left out"
+              },
+              "help": {
+                "text": "Write the period in \"period\", such as \"calendar month\", \"trailing 28 days\" or \"as at the last day of the month\", or set the type to snapshot if the metric is a point in time. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "formula-unit-mismatch",
+              "name": "formula-unit-mismatch",
+              "shortDescription": {
+                "text": "a formula that adds or subtracts metrics whose declared units differ, such as a currency amount and a count; only terms that are exactly one metric are compared"
+              },
+              "help": {
+                "text": "Convert one side first (for example with a price) or use a different formula. If the two units are the same unit under two spellings, write them the same way. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "formula-unknown-metric",
+              "name": "formula-unknown-metric",
+              "shortDescription": {
+                "text": "a formula, a numerator or a denominator that names a metric id that is not in the dictionary"
+              },
+              "help": {
+                "text": "Correct the id, add the metric to the dictionary, or write the part as a source field (without braces) if it is not a metric. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "metric-circular",
+              "name": "metric-circular",
+              "shortDescription": {
+                "text": "metrics that depend on each other in a circle, directly (a metric that names itself) or through others"
+              },
+              "help": {
+                "text": "Break the circle: one of the metrics in it must be worked out from source fields, not from the next one in the circle. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "grain-finer-than-input",
+              "name": "grain-finer-than-input",
+              "shortDescription": {
+                "text": "a metric built from other metrics whose grain is finer than one of them, with no \"aggregation\" note: a daily figure made from a monthly one, an order-level figure made from a customer-level one"
+              },
+              "help": {
+                "text": "Say in \"aggregation\" how the coarser input is spread down to the finer grain, or move the metric to the grain of its inputs. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "active-uses-inactive",
+              "name": "active-uses-inactive",
+              "shortDescription": {
+                "text": "an active metric whose formula, numerator or denominator names a metric that is draft or deprecated"
+              },
+              "help": {
+                "text": "Move the active metric to the active or replacing metric, or finish the draft before the active metric depends on it. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "deprecated-no-replacement",
+              "name": "deprecated-no-replacement",
+              "shortDescription": {
+                "text": "a deprecated metric with no \"replaced_by\""
+              },
+              "help": {
+                "text": "Name the metric that replaces it in \"replaced_by\", or say in \"note\" that nothing does. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "replaced-by-invalid",
+              "name": "replaced-by-invalid",
+              "shortDescription": {
+                "text": "a \"replaced_by\" that names a metric that is not in the dictionary, is the metric itself or is deprecated"
+              },
+              "help": {
+                "text": "Point replaced_by at an active metric of the dictionary, or at the last metric of the chain. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "formula-duplicate",
+              "name": "formula-duplicate",
+              "shortDescription": {
+                "text": "two metrics with the same formula and the same filters under different names (the formula compared as text without case and spaces, or as the same structure); a deprecated metric that names the other in replaced_by is left out"
+              },
+              "help": {
+                "text": "Keep one metric and make the other an alias, or write down what makes them different: a filter, a period, a source. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "ratio-parts-missing",
+              "name": "ratio-parts-missing",
+              "shortDescription": {
+                "text": "a ratio or a rate whose numerator or denominator is not stated: no \"numerator\" and \"denominator\", and no division in the formula that has something on each side"
+              },
+              "help": {
+                "text": "Write the \"numerator\" and the \"denominator\" in words (or as {metric_id}), or write the division in the formula. (dictionary)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "dictionary"
+              }
+            },
+            {
+              "id": "report-unknown-metric",
+              "name": "report-unknown-metric",
+              "shortDescription": {
+                "text": "a report that shows a metric id that is not in the dictionary"
+              },
+              "help": {
+                "text": "Correct the id, add the metric to the dictionary, or take it off the report. If the report uses a name there, write the id. (reports)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "reports"
+              }
+            },
+            {
+              "id": "report-label-differs",
+              "name": "report-label-differs",
+              "shortDescription": {
+                "text": "a report that shows a metric under a label that is neither its name nor one of its aliases"
+              },
+              "help": {
+                "text": "Use the name of the dictionary on the report, or add the label to the aliases of that metric (and see that it belongs to no other). (reports)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "reports"
+              }
+            },
+            {
+              "id": "report-shows-deprecated",
+              "name": "report-shows-deprecated",
+              "shortDescription": {
+                "text": "a report that shows a deprecated metric"
+              },
+              "help": {
+                "text": "Move the report to the metric named in replaced_by, or keep it on purpose and say why in the note of the metric. (reports)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "reports"
+              }
+            },
+            {
+              "id": "report-label-clash",
+              "name": "report-label-clash",
+              "shortDescription": {
+                "text": "one label used for two different metric ids in the reports (a metric shown with no label counts under its name)"
+              },
+              "help": {
+                "text": "Give each metric one label of its own on every report, so a reader who sees the label in two places gets the same number. (reports)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "reports"
+              }
+            },
+            {
+              "id": "report-no-owner",
+              "name": "report-no-owner",
+              "shortDescription": {
+                "text": "a report with no owner (in a table, when the table has an owner column)"
+              },
+              "help": {
+                "text": "Write the person, role or team that answers for the report in \"owner\". (reports)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "reports"
+              }
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "examples/good/metrics.yaml"
+          }
+        },
+        {
+          "location": {
+            "uri": "examples/good/reports.yaml"
+          }
+        }
+      ],
+      "results": [],
+      "properties": {
+        "notice": "This report reads the dictionary file and the reports file and nothing else. It never connects to data and never runs a formula. A clean result means that none of the problems of its checks were found in them; it is not a statement that the definitions are right, that the numbers are correct or that the reports show what they say.",
+        "result": "PASS - no finding at or above error"
+      }
+    }
+  ]
+}

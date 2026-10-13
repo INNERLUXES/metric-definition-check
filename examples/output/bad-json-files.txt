@@ -1,0 +1,106 @@
+metric-definition-check: examples/bad/metrics.json + examples/bad/reports.json
+dictionary file: examples/bad/metrics.json (json, 100 lines, 3,319 bytes)
+reports file: examples/bad/reports.json (json, 20 lines, 478 bytes)
+dictionary: Subscription product metric dictionary (with mistakes): 7 metrics
+reports: 2 reports, 5 metrics shown, 5 different metrics; 3 metrics of the dictionary on no report
+findings: 11 (6 error, 5 warning)
+
+Metrics for each status
+
+  status  metrics
+  active  7
+
+Metrics for each owner
+
+  owner    metrics
+  Finance  3
+  Product  2
+  Growth   1
+  Sales    1
+
+Metrics for each grain
+
+  grain  metrics
+  month  7
+
+Checks (28)
+
+  check                      level    kind        status  findings
+  file-unreadable            error    file        pass    0
+  field-invalid              error    file        fail    2
+  field-unknown              warning  file        pass    0
+  metric-duplicate-id        error    dictionary  pass    0
+  name-clash                 error    dictionary  fail    1
+  metric-no-definition       error    dictionary  pass    0
+  definition-repeats-name    warning  dictionary  pass    0
+  metric-no-formula          error    dictionary  pass    0
+  metric-no-unit             warning  dictionary  pass    0
+  metric-no-grain            warning  dictionary  pass    0
+  metric-no-owner            warning  dictionary  pass    0
+  metric-no-source           warning  dictionary  pass    0
+  metric-no-status           warning  dictionary  pass    0
+  metric-no-period           warning  dictionary  fail    1
+  formula-unit-mismatch      error    dictionary  fail    1
+  formula-unknown-metric     error    dictionary  pass    0
+  metric-circular            error    dictionary  pass    0
+  grain-finer-than-input     warning  dictionary  pass    0
+  active-uses-inactive       error    dictionary  pass    0
+  deprecated-no-replacement  warning  dictionary  pass    0
+  replaced-by-invalid        error    dictionary  pass    0
+  formula-duplicate          warning  dictionary  pass    0
+  ratio-parts-missing        warning  dictionary  fail    1
+  report-unknown-metric      error    reports     fail    1
+  report-label-differs       warning  reports     fail    2
+  report-shows-deprecated    warning  reports     pass    0
+  report-label-clash         error    reports     fail    1
+  report-no-owner            warning  reports     fail    1
+
+Findings (11)
+
+  ERROR    field-invalid              examples/bad/metrics.json:80
+           The metric "Paying accounts": the formula cannot be followed: a { is not closed; write a metric as {metric_id}.
+           fix: Write the value as docs/inputs.md says. A metric or a row with a value the tool cannot use is left out of the other checks where it matters, so fix it first.
+
+  ERROR    field-invalid              examples/bad/metrics.json:92
+           The metric "Average seats": the formula cannot be followed: the op "median" is not one of add, subtract, multiply, divide, sum, count, count_distinct, avg, min, max.
+           fix: Write the value as docs/inputs.md says. A metric or a row with a value the tool cannot use is left out of the other checks where it matters, so fix it first.
+
+  ERROR    name-clash                 examples/bad/metrics.json:18
+           The name "MRR" is used by two metrics: "Monthly recurring revenue" at line 4 and "MRR" at line 18 (one of them as an alias).
+           fix: Give each metric a name of its own that says what is different (for example "Revenue (booked)" and "Revenue (recognised)"), and remove the alias from the metric that does not own it.
+
+  ERROR    formula-unit-mismatch      examples/bad/metrics.json:48
+           The metric "Recurring revenue and new subscriptions" adds or subtracts metrics of different units: "Monthly recurring revenue" in USD and "New subscriptions" in count.
+           fix: Convert one side first (for example with a price) or use a different formula. If the two units are the same unit under two spellings, write them the same way.
+
+  ERROR    report-unknown-metric      examples/bad/reports.json:8
+           The report "Board pack" shows the metric "trial_conversion", which is not in the dictionary.
+           fix: Correct the id, add the metric to the dictionary, or take it off the report. If the report uses a name there, write the id.
+
+  ERROR    report-label-clash         examples/bad/reports.json:15
+           The report "Growth review" shows "New subscriptions" under the label "MRR", the label that Board pack uses for "Monthly recurring revenue" (line 6).
+           fix: Give each metric one label of its own on every report, so a reader who sees the label in two places gets the same number.
+
+  WARNING  metric-no-period           examples/bad/metrics.json:31
+           The metric "New subscriptions" looks like a rate, a ratio or a count (its type is count) and has no period or time window rule, so nothing says over what time it is measured.
+           fix: Write the period in "period", such as "calendar month", "trailing 28 days" or "as at the last day of the month", or set the type to snapshot if the metric is a point in time.
+
+  WARNING  ratio-parts-missing        examples/bad/metrics.json:61
+           The metric "Trial conversion rate" is a ratio and does not state the denominator: write "numerator" and "denominator", or the division in the formula.
+           fix: Write the "numerator" and the "denominator" in words (or as {metric_id}), or write the division in the formula.
+
+  WARNING  report-no-owner            examples/bad/reports.json:3
+           The report "Board pack" has no owner, so nobody is named who can answer for its numbers.
+           fix: Write the person, role or team that answers for the report in "owner".
+
+  WARNING  report-label-differs       examples/bad/reports.json:7
+           The report "Board pack" shows "MRR" as "Booked MRR", which is not its name or one of its aliases.
+           fix: Use the name of the dictionary on the report, or add the label to the aliases of that metric (and see that it belongs to no other).
+
+  WARNING  report-label-differs       examples/bad/reports.json:15
+           The report "Growth review" shows "New subscriptions" as "MRR", which is not its name or one of its aliases.
+           fix: Use the name of the dictionary on the report, or add the label to the aliases of that metric (and see that it belongs to no other).
+
+This report reads the dictionary file and the reports file and nothing else. It never connects to data and never runs a formula. A clean result means that none of the problems of its checks were found in them; it is not a statement that the definitions are right, that the numbers are correct or that the reports show what they say.
+
+RESULT: FAIL - 6 findings at or above error (6 error, 5 warning)

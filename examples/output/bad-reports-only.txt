@@ -1,0 +1,94 @@
+metric-definition-check: examples/good/metrics.yaml + examples/bad/reports.yaml
+dictionary file: examples/good/metrics.yaml (yaml, 174 lines, 6,067 bytes)
+reports file: examples/bad/reports.yaml (yaml, 21 lines, 516 bytes)
+dictionary: Online shop metric dictionary: 14 metrics
+reports: 3 reports, 7 metrics shown, 7 different metrics; 8 metrics of the dictionary on no report
+findings: 7 (2 error, 5 warning)
+
+Metrics for each status
+
+  status      metrics
+  active      12
+  deprecated  1
+  draft       1
+
+Metrics for each owner
+
+  owner             metrics
+  Customer success  5
+  Finance           4
+  Logistics         3
+  Sales operations  2
+
+Metrics for each grain
+
+  grain    metrics
+  day      8
+  month    5
+  quarter  1
+
+Checks (28)
+
+  check                      level    kind        status  findings
+  file-unreadable            error    file        pass    0
+  field-invalid              error    file        pass    0
+  field-unknown              warning  file        pass    0
+  metric-duplicate-id        error    dictionary  pass    0
+  name-clash                 error    dictionary  pass    0
+  metric-no-definition       error    dictionary  pass    0
+  definition-repeats-name    warning  dictionary  pass    0
+  metric-no-formula          error    dictionary  pass    0
+  metric-no-unit             warning  dictionary  pass    0
+  metric-no-grain            warning  dictionary  pass    0
+  metric-no-owner            warning  dictionary  pass    0
+  metric-no-source           warning  dictionary  pass    0
+  metric-no-status           warning  dictionary  pass    0
+  metric-no-period           warning  dictionary  pass    0
+  formula-unit-mismatch      error    dictionary  pass    0
+  formula-unknown-metric     error    dictionary  pass    0
+  metric-circular            error    dictionary  pass    0
+  grain-finer-than-input     warning  dictionary  pass    0
+  active-uses-inactive       error    dictionary  pass    0
+  deprecated-no-replacement  warning  dictionary  pass    0
+  replaced-by-invalid        error    dictionary  pass    0
+  formula-duplicate          warning  dictionary  pass    0
+  ratio-parts-missing        warning  dictionary  pass    0
+  report-unknown-metric      error    reports     fail    1
+  report-label-differs       warning  reports     fail    3
+  report-shows-deprecated    warning  reports     fail    1
+  report-label-clash         error    reports     fail    1
+  report-no-owner            warning  reports     fail    1
+
+Findings (7)
+
+  ERROR    report-unknown-metric      examples/bad/reports.yaml:15
+           The report "Customer health" shows the metric "churn_rate", which is not in the dictionary.
+           fix: Correct the id, add the metric to the dictionary, or take it off the report. If the report uses a name there, write the id.
+
+  ERROR    report-label-clash         examples/bad/reports.yaml:19
+           The report "Delivery performance" shows "On-time delivery rate" under the label "Churn", the label that Customer health uses for "Customer churn rate" (line 13).
+           fix: Give each metric one label of its own on every report, so a reader who sees the label in two places gets the same number.
+
+  WARNING  report-label-differs       examples/bad/reports.yaml:8
+           The report "Weekly sales summary" shows "Net revenue" as "Net sales", which is not its name or one of its aliases.
+           fix: Use the name of the dictionary on the report, or add the label to the aliases of that metric (and see that it belongs to no other).
+
+  WARNING  report-no-owner            examples/bad/reports.yaml:9
+           The report "Customer health" has no owner, so nobody is named who can answer for its numbers.
+           fix: Write the person, role or team that answers for the report in "owner".
+
+  WARNING  report-label-differs       examples/bad/reports.yaml:12
+           The report "Customer health" shows "Active customers" as "Active clients", which is not its name or one of its aliases.
+           fix: Use the name of the dictionary on the report, or add the label to the aliases of that metric (and see that it belongs to no other).
+
+  WARNING  report-label-differs       examples/bad/reports.yaml:20
+           The report "Delivery performance" shows "On-time delivery rate" as "Churn", which is not its name or one of its aliases.
+           fix: Use the name of the dictionary on the report, or add the label to the aliases of that metric (and see that it belongs to no other).
+
+  WARNING  report-shows-deprecated    examples/bad/reports.yaml:21
+           The report "Delivery performance" shows "Revenue (legacy)", which is deprecated (replaced by "net_revenue").
+           fix: Move the report to the metric named in replaced_by, or keep it on purpose and say why in the note of the metric.
+
+This report reads the dictionary file and the reports file and nothing else. It never connects to data and never runs a formula. A clean result means that none of the problems of its checks were found in them; it is not a statement that the definitions are right, that the numbers are correct or that the reports show what they say.
+
+RESULT: FAIL - 2 findings at or above error (2 error, 5 warning)
