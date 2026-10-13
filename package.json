@@ -1,0 +1,52 @@
+{
+  "name": "metric-definition-check",
+  "version": "1.0.0",
+  "description": "Checks a metric dictionary, the written definitions of business measures such as revenue, active customers, churn or on-time delivery, before dashboards and reports are built on it, so that two reports do not show two different numbers for one name. Reads a dictionary (YAML or JSON) and, if given, a list of reports (YAML, JSON or CSV), and reports duplicate ids, a name or alias used by two metrics, a metric with no definition, formula, unit, grain, owner, source or period, units that do not add up in a formula, formulas that name an unknown metric, circles, a metric finer than its inputs, active metrics built on draft or deprecated ones, bad replaced_by, two metrics with one formula and ratios with a missing part, and, for the reports, unknown metrics, labels that differ from the dictionary, deprecated metrics still shown, one label for two metrics and reports with no owner. It checks wording and structure, not whether the numbers are right; it is not a data quality tool and not an audit. Never connects to data or a BI tool, never runs a formula, contacts nothing over the network, reads no clock, writes nothing. Text, markdown, JSON, SARIF and JUnit output, no dependencies.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "bin": {
+    "metric-definition-check": "bin/metric-definition-check.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "docs",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "test:coverage": "node --test --experimental-test-coverage \"test/*.test.js\"",
+    "check": "node tools/check.mjs",
+    "example": "node tools/example.mjs"
+  },
+  "keywords": [
+    "data-analytics",
+    "metrics",
+    "kpi",
+    "semantic-layer",
+    "data-governance",
+    "business-intelligence",
+    "dashboards",
+    "metric-definitions",
+    "yaml",
+    "junit",
+    "sarif",
+    "cli",
+    "nodejs"
+  ],
+  "author": "INNERLUXES <info@innerluxes.dev>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/INNERLUXES/metric-definition-check.git"
+  },
+  "homepage": "https://innerluxes.dev"
+}
